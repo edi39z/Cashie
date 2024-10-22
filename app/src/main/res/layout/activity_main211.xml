@@ -41,7 +41,7 @@
     <Button
         android:id="@+id/btn_primary"
         app:icon="@drawable/icon_email"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Primary"
         app:layout_constraintBottom_toBottomOf="parent"
