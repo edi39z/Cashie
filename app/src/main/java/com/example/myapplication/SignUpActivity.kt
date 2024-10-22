@@ -1,4 +1,4 @@
-package com.codingstuff.loginandsignup
+package com.example.myapplication;
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
+
 
 class SignUpActivity : AppCompatActivity() {
 

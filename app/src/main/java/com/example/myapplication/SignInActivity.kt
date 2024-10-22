@@ -1,4 +1,4 @@
-package com.codingstuff.loginandsignup
+package com.example.myapplication;
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +20,7 @@ class SignInActivity : AppCompatActivity() {
 
 
         firebaseAuth = FirebaseAuth.getInstance()
-        binding.textView.setOnClickListener {
+        binding.createAnA.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
