@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "999968586799",
+    "project_id": "cashie-3e666",
+    "storage_bucket": "cashie-3e666.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999968586799:android:2ea939733022aa63a4dada",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaWJv4idZPXPpf5rBOgCQJYd597JBpcxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
