@@ -8,19 +8,19 @@ import android.os.Handler
 import android.os.Looper
 
 @SuppressLint("CustomSplashScreen")
-class SplashActivity : AppCompatActivity() {
+class LoadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            goToMainActivity()
+            goToSignInActivity()
         }, 3000L)
     }
 
-    private fun goToMainActivity() {
-        Intent(this, MainActivity::class.java).also {
-            SignInActivity()
+    private fun goToSignInActivity() {
+        Intent(this, SignInActivity::class.java).also {
+            startActivity(it)
             finish()
         }
     }

@@ -17,18 +17,16 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Firebase Authentication instance
         auth = FirebaseAuth.getInstance()
 
-        // Logout button action
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
-            auth.signOut()  // Perform logout
+            auth.signOut()
 
-            // Redirect to SignInActivity after logout
+            // Mengarahkan pengguna ke SignInActivity setelah logout
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
-            finish()  // Finish this activity
+            finish()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
