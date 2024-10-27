@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Cashie</string>
+    <string name="welcome">Welcome To</string>
+    <string name="signin">Sign in</string>
+    <string name="noakun">Not Registered Yet</string>
+    <string name="regis">Create an Account</string>
+
 </resources>

@@ -13,7 +13,7 @@
         android:id="@+id/welcome_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to"
+        android:text="@string/welcome"
         android:textSize="20sp"
         android:textColor="#000000"
         android:fontFamily="sans-serif"
@@ -27,7 +27,7 @@
         android:id="@+id/cashie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cashie"
+        android:text="@string/app_name"
         android:textSize="40sp"
         android:textColor="#03AED2"
         android:fontFamily="cursive"
@@ -46,8 +46,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"
-        app:boxStrokeColor="@color/yellow"
-        app:hintTextColor="@color/yellow">
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEt"
@@ -69,8 +69,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
         app:passwordToggleEnabled="true"
-        app:boxStrokeColor="@color/yellow"
-        app:hintTextColor="@color/yellow">
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passET"
@@ -100,7 +100,7 @@
         android:layout_width="324dp"
         android:layout_height="63dp"
         android:background="@color/btncolor"
-        android:text="Sign In"
+        android:text="@string/signin"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/recovery_pa"
@@ -113,7 +113,7 @@
         android:id="@+id/not_have_ac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not Registered Yet?"
+        android:text="@string/noakun"
         android:textSize="14sp"
         android:textColor="#CC000000"
         app:layout_constraintTop_toBottomOf="@id/button"
@@ -126,7 +126,7 @@
         android:id="@+id/create_an_a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create an Account"
+        android:text="@string/regis"
         android:textSize="14sp"
         android:textColor="#03AED2"
         app:layout_constraintTop_toBottomOf="@id/not_have_ac"
