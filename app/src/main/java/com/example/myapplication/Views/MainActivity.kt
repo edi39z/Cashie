@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.Views
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         logoutButton.setOnClickListener {
             auth.signOut()
 
-            // Mengarahkan pengguna ke SignInActivity setelah logout
+            // ke logout
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
             finish()

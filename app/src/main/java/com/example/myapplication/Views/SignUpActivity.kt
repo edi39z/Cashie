@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Views;
 
 import android.content.Intent
 import android.os.Bundle
@@ -35,7 +35,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val intent = Intent(this, SignInActivity::class.java)
+                            val intent = Intent(this,RegisterActivity::class.java)
                             startActivity(intent)
                         } else {
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()

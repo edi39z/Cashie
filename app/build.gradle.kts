@@ -75,4 +75,48 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+
+
+        val composeBom = platform("androidx.compose:compose-bom:2024.09.03")
+        implementation(composeBom)
+        androidTestImplementation(composeBom)
+
+
+        implementation(libs.material3)
+        // or Material Design 2
+        implementation(libs.androidx.material)
+        // or skip Material Design and build directly on top of foundational components
+        implementation(libs.androidx.foundation)
+        // or only import the main APIs for the underlying toolkit systems,
+        // such as input and measurement/layout
+        implementation(libs.ui)
+
+        // Android Studio Preview support
+        implementation(libs.ui.tooling.preview)
+        debugImplementation(libs.ui.tooling)
+
+
+        androidTestImplementation(libs.ui.test.junit4)
+        debugImplementation(libs.ui.test.manifest)
+
+
+        implementation(libs.androidx.material.icons.core)
+
+        implementation(libs.androidx.material.icons.extended)
+
+        implementation(libs.androidx.adaptive)
+
+
+        implementation(libs.androidx.activity.compose.v193)
+        implementation(libs.androidx.lifecycle.viewmodel.compose)
+        implementation(libs.androidx.runtime.livedata)
+        implementation(libs.androidx.runtime.rxjava2)
+        implementation(kotlin("script-runtime"))
+        implementation(platform(libs.firebase.bom))
+        implementation(libs.firebase.auth.ktx)
+        implementation(libs.play.services.auth)
+
+
 }

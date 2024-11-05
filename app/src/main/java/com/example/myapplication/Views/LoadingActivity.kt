@@ -1,13 +1,14 @@
-package com.example.myapplication
+package com.example.myapplication.Views
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.R
 
-@SuppressLint("CustomSplashScreen")
+@SuppressLint("Loading")
 class LoadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
