@@ -16,6 +16,9 @@
             android:name=".Views.RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".HomeActivity2"
+            android:exported="false" />
+        <activity
             android:name=".welcome4"
             android:exported="false" />
         <activity
