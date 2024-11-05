@@ -4,5 +4,12 @@
     <string name="signin">Sign in</string>
     <string name="noakun">Not Registered Yet</string>
     <string name="regis">Create an Account</string>
-
+    <string name="mobile_cash">Mobile Cash</string>
+    <string name="built_in_sc">Built-in Scanner</string>
+    <string name="stock_datab">Stock Database</string>
+    <string name="sales_histo">Sales History</string>
+    <string name="simplify_yo">Simplify your business with a mobile-\nbased cashier system.</string>
+    <string name="comes_with">Comes with a built-in EAN-13 barcode \nscanner for quick product scanning.</string>
+    <string name="includes">Includes a stock database for \neasy inventory management.</string>
+    <string name="view_past_t">View past transactions, products sold, and \nrevenue at a glance with detailed sales \n history.</string>
 </resources>

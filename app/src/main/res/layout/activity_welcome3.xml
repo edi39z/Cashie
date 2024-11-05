@@ -1,0 +1,86 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".welcome2">
+
+    <include
+        layout="@layout/welcome_cashie"
+        android:id="@+id/welcome_cashie_layout" />
+
+    <ImageView
+        android:id="@+id/frame_3"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/frame_3"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/welcome_cashie_layout"
+        app:layout_constraintStart_toStartOf="@id/welcome_cashie_layout"
+        app:layout_constraintEnd_toEndOf="@id/welcome_cashie_layout" />
+
+    <TextView
+        android:id="@+id/built_in_sc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal|top"
+        android:text="@string/stock_datab"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/frame_3"
+        app:layout_constraintStart_toStartOf="@+id/frame_3"
+        app:layout_constraintTop_toBottomOf="@+id/frame_3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/simplify_yo"
+        android:text="@string/includes"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/built_in_sc"
+        app:layout_constraintStart_toStartOf="@+id/built_in_sc"
+        app:layout_constraintTop_toBottomOf="@+id/built_in_sc" />
+
+    <!-- Dots Indicator -->
+    <LinearLayout
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/simplify_yo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot_inactive" />
+
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot_inactive" />
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot_active" />
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot_inactive" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
