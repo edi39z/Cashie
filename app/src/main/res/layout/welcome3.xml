@@ -1,10 +1,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/welcome_3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".welcome2">
+    tools:context=".welcome3">
 
     <include
         layout="@layout/welcome_cashie"

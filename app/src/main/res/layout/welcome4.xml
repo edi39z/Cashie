@@ -1,10 +1,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/welcome_4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".welcome2">
+    tools:context=".welcome4">
 
     <include
         layout="@layout/welcome_cashie"
@@ -83,5 +83,23 @@
             android:layout_margin="4dp"
             android:background="@drawable/dot_active" />
 
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/signin"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dotsIndicator"
+        app:layout_constraintTop_toBottomOf="@+id/dotsIndicator" />
 </androidx.constraintlayout.widget.ConstraintLayout>
