@@ -46,45 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sales_histo" />
 
     <!-- Dots Indicator -->
-    <LinearLayout
-        android:id="@+id/dotsIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/simplify_yo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_inactive" />
-
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_inactive" />
-
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_inactive" />
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_active" />
-
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/btnSignIn"
