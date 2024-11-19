@@ -121,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
 
-    <!-- Social Login Buttons (Facebook and Google) -->
+
     <LinearLayout
         android:id="@+id/social_login_layout"
         android:layout_width="wrap_content"
