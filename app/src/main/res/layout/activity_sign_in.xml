@@ -99,14 +99,14 @@
         android:id="@+id/button"
         android:layout_width="324dp"
         android:layout_height="63dp"
+        android:layout_marginTop="40dp"
         android:background="@color/btncolor"
         android:text="@string/signin"
-        android:textColor="@color/white"
+        android:textColor="#5E35B1"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/recovery_pa"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recovery_pa" />
 
     <!-- Divider Text "OR CONNECT WITH" -->
     <TextView
@@ -176,4 +176,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="5dp"/>
 
+    <!--progres bar-->
+    <ProgressBar
+    android:id="@+id/progressBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

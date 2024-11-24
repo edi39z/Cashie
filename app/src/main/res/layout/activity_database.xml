@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cashie Database"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Scrollable Table -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:background="#E0F7FA">
+
+            <!-- Table Header -->
+            <TableRow>
+
+                <TextView
+                    android:background="#00BCD4"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Kode"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:background="#00BCD4"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Nama Barang"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:background="#00BCD4"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Jumlah"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:background="#00BCD4"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Harga (₺)"
+                    android:textColor="#000000" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/addRowButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#00BCD4"
+            android:text="Add Row"
+            android:textColor="#283593" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#00BCD4"
+            android:text="Save"
+            android:textColor="#283593" />
+    </LinearLayout>
+
+</LinearLayout>
