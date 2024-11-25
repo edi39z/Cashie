@@ -1,7 +1,8 @@
-package com.example.myapplication.Views;
+package com.example.myapplication.Views
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivitySignInBinding
@@ -24,6 +25,7 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         binding.button.setOnClickListener {
             val email = binding.emailEt.text.toString()
             val pass = binding.passET.text.toString()
@@ -32,7 +34,7 @@ class SignInActivity : AppCompatActivity() {
 
                 firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, DatabaseActivity::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -46,12 +48,29 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    private fun loginUser(email: String, password: String) {
+        binding.progressBar.visibility = View.VISIBLE
+
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            binding.progressBar.visibility = View.GONE
+            if (task.isSuccessful) {
+                Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, DatabaseActivity::class.java)
+                startActivity(intent)
+                finish() // Mengakhiri SignInActivity agar pengguna tidak bisa kembali ke sini
+            } else {
+                Toast.makeText(this, task.exception?.localizedMessage ?: "Login gagal!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onStart() {
         super.onStart()
-
-        if(firebaseAuth.currentUser != null){
-            val intent = Intent(this,MainActivity::class.java)
+        // Jika pengguna sudah login, langsung arahkan ke DatabaseActivity
+        if (firebaseAuth.currentUser != null) {
+            val intent = Intent(this, DatabaseActivity::class.java)
             startActivity(intent)
+            finish() // Mengakhiri SignInActivity
         }
     }
 }
