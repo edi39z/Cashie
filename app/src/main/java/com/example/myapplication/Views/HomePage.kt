@@ -40,6 +40,7 @@ fun HomePage() {
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewHome() {

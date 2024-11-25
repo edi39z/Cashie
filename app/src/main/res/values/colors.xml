@@ -12,13 +12,16 @@
     <color name="primary">#FF637DC6</color>
     <color name="dark">#FF2C3E50</color>
     <color name="gray">#D9D9D9</color>
-<<<<<<< HEAD
+
     <color name="background">#00BCD4</color>
-=======
+
+    <color name="background">#00BCD4</color>
+
     <color name="navbar">#6A9C89</color>
     <color name="navbar_icon_background">#16423C</color>
 
 
->>>>>>> c55c38a52a56a8aaadf55835689a12869522c232
+
+
 
 </resources>

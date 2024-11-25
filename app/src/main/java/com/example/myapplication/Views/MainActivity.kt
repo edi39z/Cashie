@@ -3,7 +3,7 @@ package com.example.myapplication.Views
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.Views.NavBar.NavBar
+//import com.example.myapplication.Views.NavBar.NavBar
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,7 +12,8 @@ class MainActivity : AppCompatActivity() {
 
 
         setContent {
-            NavBar()
+           DatabaseActivity()
         }
     }
 }
+
