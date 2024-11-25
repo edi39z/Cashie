@@ -75,7 +75,7 @@ class DatabaseActivity : AppCompatActivity() {
         val rowCount = tableLayout.childCount
         val data = mutableListOf<Map<String, Any>>()
 
-        for (i in 1 until rowCount) {
+
             val row = tableLayout.getChildAt(i) as TableRow
 
             val kode = (row.getChildAt(0) as EditText).text.toString().trim()
