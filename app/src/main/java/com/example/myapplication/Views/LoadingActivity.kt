@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
+import com.example.myapplication.welcome1
 
 @SuppressLint("Loading")
 class LoadingActivity : AppCompatActivity() {
@@ -15,12 +16,12 @@ class LoadingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_loading)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            goToSignInActivity()
+            goToWelcomeActivity()
         }, 3000L)
     }
 
-    private fun goToSignInActivity() {
-        Intent(this, SignInActivity::class.java).also {
+    private fun goToWelcomeActivity() {
+        Intent(this, welcome1::class.java).also {
             startActivity(it)
             finish()
         }

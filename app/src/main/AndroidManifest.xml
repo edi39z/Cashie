@@ -11,6 +11,28 @@
         android:roundIcon="@drawable/cashie"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
+        tools:targetApi="31">
+        <activity
+            android:name=".Views.DatabaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.HomeActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".welcome4"
+            android:exported="false" />
+        <activity
+            android:name=".welcome3"
+            android:exported="false" />
+        <activity
+            android:name=".welcome2"
+            android:exported="false" />
+        <activity
+            android:name=".welcome1"
+            android:exported="false" />
         <activity
             android:name=".Views.LoadingActivity"
             android:exported="true">

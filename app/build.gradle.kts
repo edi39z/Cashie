@@ -69,9 +69,13 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth)
+<<<<<<< HEAD
+    implementation(libs.firebase.database.ktx)
+=======
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
 
+>>>>>>> c55c38a52a56a8aaadf55835689a12869522c232
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
