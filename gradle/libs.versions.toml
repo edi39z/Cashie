@@ -20,7 +20,6 @@ firebaseAuth = "23.0.0"
 playServicesAuth = "21.2.0"
 
 firebaseDatabaseKtx = "21.0.0"
-firebaseDatabaseKtx = "21.0.0"
 navigationRuntimeKtx = "2.8.4"
 navigationCompose = "2.8.4"
 
@@ -64,7 +63,6 @@ ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 
-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
