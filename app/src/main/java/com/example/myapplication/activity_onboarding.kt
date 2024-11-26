@@ -41,4 +41,6 @@ class activity_onboarding : AppCompatActivity() {
             page.alpha = 0.3f + (1 - Math.abs(position)) * 0.7f
         }
     }
+
+
 }
