@@ -65,9 +65,9 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // Jika pengguna sudah login, langsung arahkan ke DatabaseActivity
+        // Jika pengguna sudah login, langsung arahkan ke Homepage
         if (firebaseAuth.currentUser != null) {
-            val intent = Intent(this, DatabaseActivity::class.java)
+            val intent = Intent(this, HomeActivity2::class.java)
             startActivity(intent)
             finish() // Mengakhiri SignInActivity
         }

@@ -1,3 +1,4 @@
+/*
 package com.example.myapplication.Views.NavBar
 
 import androidx.compose.runtime.Composable
@@ -38,3 +39,6 @@ fun BottomNavGraph(
         }
     }
 }
+
+
+*/
