@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -30,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,6 +81,7 @@ fun CashierMenu() {
             onClick = {},
             colors = ButtonDefaults.buttonColors(Yellow),
             modifier = Modifier
+                .offset(y=-30.dp)
                 .size(70.dp) // Ukuran lingkaran
                 .clip(CircleShape) // Membuat bentuk lingkaran
         ) {
@@ -88,257 +91,287 @@ fun CashierMenu() {
                 tint = Color.Black
             )
         }
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+        Column(modifier = Modifier
+            .offset(y=-30.dp)
+            .fillMaxWidth()
         ) {
-            // Tombol di kiri
             Row(
-                horizontalArrangement = Arrangement.spacedBy(11.dp)
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .size(35.dp) // Ukuran lingkaran
-                        .clip(CircleShape) // Membuat bentuk lingkaran
+                // Tombol di kiri
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.weight(1f)
                 ) {
-                    Text(
-                        "x2",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .size(35.dp) // Ukuran lingkaran
-                        .clip(CircleShape) // Membuat bentuk lingkaran
-                ) {
-                    Text(
-                        "x3",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .size(35.dp) // Ukuran lingkaran
-                        .clip(CircleShape) // Membuat bentuk lingkaran
-                ) {
-                    Text(
-                        "x4",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-            }
-
-            Spacer(Modifier.width(70.dp))
-
-            // Tombol di kanan
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(11.dp)
-            ) {
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .size(35.dp) // Ukuran lingkaran
-                        .clip(CircleShape) // Membuat bentuk lingkaran
-                ) {
-                    Text(
-                        "x5",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .size(35.dp) // Ukuran lingkaran
-                        .clip(CircleShape) // Membuat bentuk lingkaran
-                ) {
-                    Text(
-                        "x10",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .size(35.dp) // Ukuran lingkaran
-                        .clip(CircleShape) // Membuat bentuk lingkaran
-                ) {
-                    Text(
-                        "xn",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(18.dp),
-                modifier = Modifier
-                    .weight(1f)
-            ){
-                Text(
-                    "Quick scan"
-                )
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .height(50.dp) // Ukuran lingkaran
-                        .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                        .background(Gray)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        "Indomie goreng",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .height(50.dp) // Ukuran lingkaran
-                        .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                        .background(Gray)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        "Indomie goreng",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .height(50.dp) // Ukuran lingkaran
-                        .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                        .background(Gray)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        "Indomie goreng",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .height(50.dp) // Ukuran lingkaran
-                        .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                        .background(Gray)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        "Indomie goreng",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(Gray),
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .height(50.dp) // Ukuran lingkaran
-                        .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                        .background(Gray)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        "Indomie goreng",
-                        fontSize = 12.sp,
-                        color = Color.Black
-                    )
-                }
-            }
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(18.dp),
-                modifier = Modifier
-                    .weight(2f)
-            ){
-                Text("Preview")
-                Box(
-                    modifier = Modifier
-                        .background(color = Blue, shape = RoundedCornerShape(0.dp, 10.dp, 10.dp, 0.dp))
-                        .padding(14.dp)
-                        .fillMaxSize()
-                ){
-                    Column(
-                        modifier = Modifier.fillMaxSize()
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .size(35.dp) // Ukuran lingkaran
+                            .clip(CircleShape) // Membuat bentuk lingkaran
                     ) {
-                        // Add your table here
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text("Nama")
-                            Text("Jumlah")
-                            Text("Harga")
-                        }
-                        for (i in 1..10) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text("Indomie Goreng")
-                                Text("1")
-                                Text("3000")
-                            }
-                        }
+                        Text(
+                            "x2",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
                     }
                     Button(
                         onClick = {},
-                        colors = ButtonDefaults.buttonColors(Yellow),
+                        colors = ButtonDefaults.buttonColors(Gray),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
-                            .width(70.dp)
-                            .height(20.dp)
-                            .clip(RoundedCornerShape(10.dp)) // Membuat bentuk lingkaran
-                            .align(Alignment.BottomEnd)
+                            .size(35.dp) // Ukuran lingkaran
+                            .clip(CircleShape) // Membuat bentuk lingkaran
                     ) {
                         Text(
-                            "Next",
-                            color = Color.Black,
-                            fontSize = 10.sp
+                            "x3",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .size(35.dp) // Ukuran lingkaran
+                            .clip(CircleShape) // Membuat bentuk lingkaran
+                    ) {
+                        Text(
+                            "x4",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                }
+
+                Spacer(Modifier.width(70.dp))
+
+                // Tombol di kanan
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .size(35.dp) // Ukuran lingkaran
+                            .clip(CircleShape) // Membuat bentuk lingkaran
+                    ) {
+                        Text(
+                            "x5",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .size(35.dp) // Ukuran lingkaran
+                            .clip(CircleShape) // Membuat bentuk lingkaran
+                    ) {
+                        Text(
+                            "x10",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .size(35.dp) // Ukuran lingkaran
+                            .clip(CircleShape) // Membuat bentuk lingkaran
+                    ) {
+                        Text(
+                            "xn",
+                            fontSize = 12.sp,
+                            color = Color.Black
                         )
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.size(20.dp))
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(18.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                ){
+                    Text(
+                        "Quick scan",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight(700)
+                    )
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .height(50.dp) // Ukuran lingkaran
+                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
+                            .background(Gray)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "Indomie goreng",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .height(50.dp) // Ukuran lingkaran
+                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
+                            .background(Gray)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "Indomie goreng",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .height(50.dp) // Ukuran lingkaran
+                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
+                            .background(Gray)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "Indomie goreng",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .height(50.dp) // Ukuran lingkaran
+                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
+                            .background(Gray)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "Indomie goreng",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(Gray),
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .height(50.dp) // Ukuran lingkaran
+                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
+                            .background(Gray)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "Indomie goreng",
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    }
+                }
+
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(18.dp),
+                    modifier = Modifier
+                        .weight(2f)
+                ){
+                    Text("Preview",
+                        fontWeight = FontWeight(700))
+                    Box(
+                        modifier = Modifier
+                            .background(color = Blue, shape = RoundedCornerShape(0.dp, 10.dp, 10.dp, 0.dp))
+                            .padding(14.dp)
+                            .fillMaxSize()
+                    ){
+                        Column(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            // Add your table here
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    "Nama",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight(700)
+                                )
+                                Text(
+                                    "Jumlah",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight(700)
+                                )
+                                Text(
+                                    "Harga",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight(700)
+                                )
+                            }
+                            Spacer(Modifier.size(8.dp))
+                            for (i in 1..10) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(
+                                        "Indomie Goreng",
+                                        fontSize = 9.sp,
+                                    )
+                                    Text(
+                                        "1",
+                                        fontSize = 9.sp
+                                    )
+                                    Text(
+                                        "3000",
+                                        fontSize = 9.sp
+                                    )
+                                }
+                            }
+                        }
+                        Button(
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(Yellow),
+                            contentPadding = PaddingValues(0.dp),
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(20.dp)
+                                .clip(RoundedCornerShape(10.dp)) // Membuat bentuk lingkaran
+                                .align(Alignment.BottomEnd)
+                        ) {
+                            Text(
+                                "Next",
+                                color = Color.Black,
+                                fontSize = 10.sp
+                            )
+                        }
+                    }
+                }
 
 
 //            Column(
@@ -370,8 +403,8 @@ fun CashierMenu() {
 //                    }
 //                }
 //            }
+            }
         }
-
     }
 }
 
