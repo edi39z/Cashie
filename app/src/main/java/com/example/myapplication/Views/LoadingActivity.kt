@@ -26,4 +26,5 @@ class LoadingActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }

@@ -18,4 +18,5 @@ class HomeActivity2 : AppCompatActivity() {
             insets
         }
     }
+
 }
