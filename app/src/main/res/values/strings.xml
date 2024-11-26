@@ -8,6 +8,7 @@
     <string name="built_in_sc">Built-in Scanner</string>
     <string name="stock_datab">Stock Database</string>
     <string name="sales_histo">Sales History</string>
+    <string name="enter_pin">Enter Your PIN</string>
     <string name="simplify_yo">Simplify your business with a mobile-\nbased cashier system.</string>
     <string name="comes_with">Comes with a built-in EAN-13 barcode \nscanner for quick product scanning.</string>
     <string name="includes">Includes a stock database for \neasy inventory management.</string>

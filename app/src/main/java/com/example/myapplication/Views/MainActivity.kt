@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
 
         setContent {
-           DatabaseActivity()
+           HomePage()
         }
     }
 }
