@@ -1,4 +1,4 @@
-package com.example.myapplication.Views
+package com.example.myapplication.views.casier
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,15 +35,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Blue
 import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.ui.theme.Logo
 import com.example.myapplication.ui.theme.Yellow
 
-class CashierPage {
+
     @Composable
-    fun CashierMenu() {
+    fun CashierPage(navMainController: NavController) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -413,7 +414,7 @@ class CashierPage {
             }
         }
     }
-}
+
 
 //@Preview(showBackground = true)
 //@Composable

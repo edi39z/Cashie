@@ -192,7 +192,7 @@ fun SignupPage(
                     onClick = {
                         viewModel.signUpWithEmailAndPassword {
                         }
-                        navController.navigate("register")
+                        navController.navigate("home")
                     },
 //                    enabled = authState.value != AuthResponse.Loading,
                     modifier = Modifier

@@ -1,6 +1,6 @@
 package com.example.myapplication.navbar
 
-import BottomBar
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,15 +12,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.Views.CashierPage
-import com.example.myapplication.Views.DataPage
-import com.example.myapplication.Views.HistoryPage
-import com.example.myapplication.Views.HomePage
+import com.example.myapplication.views.casier.CashierPage
+import com.example.myapplication.views.history.HistoryPage
+import com.example.myapplication.views.home.HomePage
+import com.example.myapplication.views.database.DataPage
 import com.example.myapplication.views.profile.ProfilePage
+
 
 @Composable
 fun BottomNavGraph(navHostController: NavController) {
-    val navController = rememberNavController() // Inisialisasi NavController hanya sekali
+    val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -31,7 +32,7 @@ fun BottomNavGraph(navHostController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // Pastikan konten tidak overlap dengan bottom bar
+                .padding(paddingValues)
         ) {
             NavHost(
                 navController = navController,
@@ -45,11 +46,10 @@ fun BottomNavGraph(navHostController: NavController) {
                     DataPage()
                 }
                 composable(route = BottomBarScreen.Cashier.route) {
-                    CashierPage()
+                    CashierPage(navHostController)
                 }
                 composable(route = BottomBarScreen.History.route) {
                     HistoryPage()
-
                 }
                 composable(route = BottomBarScreen.Profiel.route) {
                    ProfilePage()

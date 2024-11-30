@@ -1,4 +1,4 @@
-package com.example.myapplication.views.history
+package com.example.myapplication.views.database
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,15 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 
-
-
 @Composable
-fun HistoryPage(
+fun PinScreen(
 ) {
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = "History", fontSize = 20.sp)
+        Text(text = "Pin", fontSize = 20.sp)
     }
 }
