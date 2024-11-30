@@ -14,12 +14,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,31 +31,32 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.navbar.BottomBarScreen
+import com.example.myapplication.ui.theme.Blue
+import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.views.auth.`fun`.AuthManager
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 @Composable
 fun HomePage(navMainController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF68D2E8))
-    ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Blue)
         ) {
             // Header
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White)
-                    .padding(16.dp)
+                    .padding(horizontal = 40.dp, 21.dp)
             ) {
                 Image(
                     painter = painterResource(id = android.R.drawable.ic_menu_camera),
                     contentDescription = "Foto Profil",
                     modifier = Modifier
-                        .size(50.dp)
+                        .size(52.dp)
                         .background(Color.Gray, CircleShape)
                         .align(Alignment.CenterStart)
                 )
@@ -59,69 +64,90 @@ fun HomePage(navMainController: NavController) {
                     painter = painterResource(id = R.drawable.cashie),
                     contentDescription = "cashie logo",
                     modifier = Modifier
-                        .size(70.dp)
+                        .width(70.dp)
                         .align(Alignment.Center)
                 )
-            }
+                val context = LocalContext.current
+                // Icon Keluar
+                androidx.compose.material.Icon(
 
-            // Greeting Section
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(32.dp)
-            ) {
-                Text(
-                    text = buildAnnotatedString {
-                        append("Welcome,\n")
-                        withStyle(
-                            style = SpanStyle(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 24.sp
-                            )
-                        ) {
-                            append("Aqilla Zia Maira\n") // Nama pengguna
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                fontSize = 20.sp,
-                                color = Color.Gray
-                            )
-                        ) {
-                            append("UD. Sejahtera Utama") // Nama toko
-                        }
-                    },
-                    fontSize = 18.sp
+                    painter = painterResource(id = R.drawable.logout),
+                    contentDescription = "Keluar",
+                    modifier = Modifier.size(24.dp).clickable {
+                        AuthManager(context).signOut()
+                        Log.d("cobs", "$navMainController")
+                        navMainController?.navigate("login")
+
+                    }
+                        .align(Alignment.CenterEnd),
+                    tint = Color.Black
                 )
             }
-            val context = LocalContext.current
-            // Icon Keluar
-            androidx.compose.material.Icon(
+            
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(41.dp, 31.dp)
+            ){
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                ){
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontWeight = FontWeight(300),
+                                    fontSize = 15.sp,
+                                )
+                            ) {
+                                append("Welcome,\n")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    fontSize = 27.sp,
+                                    fontWeight = FontWeight(700)
+                                )
+                            ) {
+                                append("Aqilla Zia Maira\n") // Nama pengguna
+                            }
+                            append("\n")
+                            withStyle(
+                                style = SpanStyle(
+                                    fontWeight = FontWeight(700),
+                                    fontSize = 16.sp,
+                                    color = Color(0x7A303131)
+                                )
+                            ) {
+                                append("UD. SEJAHTERA UTAMA") // Nama toko
+                            }
+                        }
+                    )
+                }
 
-                painter = painterResource(id = R.drawable.logout),
-                contentDescription = "Keluar",
-                modifier = Modifier.size(24.dp).clickable {
-                    AuthManager(context).signOut()
-                    Log.d("cobs", "$navMainController")
-                    navMainController?.navigate("login")
-
-                },
-                tint = Color.Black
-            )
-
+            }
             // Konten HomePage
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                    .fillMaxSize()
+                    .background(color = Color.White, shape = RoundedCornerShape(40.dp,40.dp,0.dp,0.dp))
+                    .padding(vertical = 56.dp, horizontal = 30.dp)
+
             ) {
                 CustomBox(
                     title = "Cashier",
                     subtitle = "Let's Get Started! Begin a New Transaction",
                     imageRes = R.drawable.group,
-                    onClick = { navMainController.navigate(BottomBarScreen.Cashier.route) }
+                    onClick = { navMainController.navigate(BottomBarScreen.Cashier.route) },
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(49.dp))
+
+                Image(
+                    painter = painterResource(R.drawable.line_home),
+                    contentDescription = "tes"
+                )
+
+                Spacer(modifier = Modifier.height(49.dp))
 
                 CustomBox(
                     title = "Database",
@@ -130,7 +156,7 @@ fun HomePage(navMainController: NavController) {
                     onClick = { navMainController.navigate(BottomBarScreen.Databases.route) }
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(35.dp))
 
                 CustomBox(
                     title = "Sales History",
@@ -140,47 +166,56 @@ fun HomePage(navMainController: NavController) {
                 )
             }
         }
-    }
 }
 
 @Composable
 fun CustomBox(title: String, subtitle: String, imageRes: Int, onClick: () -> Unit) {
-    Box(
+    Row(
         modifier = Modifier
-            .width(300.dp)
-            .height(100.dp)
             .background(
-                color = Color.White,
+                color = Blue,
                 shape = RoundedCornerShape(16.dp)
             )
-            .padding(16.dp)
-            .clickable { onClick() }
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+            modifier = Modifier
+                .background(Color(0xFFC4E8F0))
+                .padding(28.dp,20.dp)
+        ){
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = "Icon",
-                modifier = Modifier.size(65.dp)
+                modifier = Modifier
+                    .size(65.dp)
             )
-            Column {
-                Text(
-                    text = title,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-                Text(
-                    text = subtitle,
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-            }
+        }
+        Column(
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end=20.dp)
+        ) {
+            Text(
+                text = title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Text(
+                text = subtitle,
+                fontSize = 12.sp,
+                color = Color.Gray,
+                textAlign = TextAlign.End
+            )
         }
     }
 }
+
 
 
 @Preview(showBackground = true)
