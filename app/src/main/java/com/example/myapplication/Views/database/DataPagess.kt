@@ -1,4 +1,4 @@
-//package com.example.myapplication.views.database
+//package com.example.myapplication.Views
 //
 //import android.os.Bundle
 //import android.util.Log
@@ -29,7 +29,7 @@
 //import kotlinx.coroutines.launch
 //import kotlinx.coroutines.withContext
 //
-//class DatabaseActivity : ComponentActivity() {
+//class DataPagess : ComponentActivity() {
 //
 //    private lateinit var barcodeScanner: BarcodeScanner
 //
@@ -47,14 +47,14 @@
 //@OptIn(ExperimentalMaterial3Api::class)
 //@Composable
 //fun DatabaseScreen(barcodeScanner: BarcodeScanner) {
-//        Box(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(Color.LightGray)
-//        ) {
-//            ScannerScreen(barcodeScanner = barcodeScanner)
-//        }
+//    Box(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .background(Color.LightGray)
+//    ) {
+//        ScannerScreen(barcodeScanner = barcodeScanner)
 //    }
+//}
 //
 //class DatabaseActivity : AppCompatActivity() {
 //

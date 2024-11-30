@@ -36,8 +36,8 @@ sealed class BottomBarScreen(
     object History: BottomBarScreen(
         route = "history",
         title = "History",
-        icon = R.drawable.history,
-        icon_focused = R.drawable.history
+        icon = R.drawable.historys,
+        icon_focused = R.drawable.historys
     )
 
     object Profiel: BottomBarScreen(

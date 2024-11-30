@@ -1,34 +1,38 @@
+package com.example.myapplication.navbar
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
-import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.R
-import com.example.myapplication.navbar.BottomBarScreen
-import com.example.myapplication.navbar.BottomNavGraph
+import com.example.myapplication.ui.theme.textbutton
 
 @Composable
 fun NavBar(navController: NavController) {
-
-    androidx.compose.material3.Scaffold(
+    Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = { BottomBar(navController = navController as NavHostController) },
         containerColor = Color.White
@@ -37,13 +41,11 @@ fun NavBar(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .verticalScroll(rememberScrollState()) // Menambahkan scrolling ke konten
         ) {
             BottomNavGraph(navController)
         }
     }
 }
-
 
 @Composable
 fun BottomBar(navController: NavHostController) {
@@ -58,24 +60,57 @@ fun BottomBar(navController: NavHostController) {
     val navStackBackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navStackBackEntry?.destination
 
-    Row(
+    Box(
         modifier = Modifier
-            .height(60.dp)
-
-            .background(colorResource(id = R.color.navbar))
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+            .fillMaxWidth()
+            .height(72.dp) // Tinggi navbar
     ) {
-        screens.forEach { screen ->
-            AddItem(
-                screen = screen,
-                currentDestination = currentDestination,
-                navController = navController
+        // Navbar dengan potongan (cutout)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp) // Tinggi navbar tanpa floating
+                .background(colorResource(id = R.color.navbar)),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            screens.forEach { screen ->
+                if (screen.route != BottomBarScreen.Cashier.route) {
+                    AddItem(
+                        screen = screen,
+                        currentDestination = currentDestination,
+                        navController = navController
+                    )
+                } else {
+                    Spacer(modifier = Modifier.width(74.dp)) // Ruang untuk floating icon
+                }
+            }
+        }
+
+        // Floating Icon untuk Cashier
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter) // Posisi di tengah
+                .offset(y = (-36).dp) // Mengapung di atas navbar
+                .size(72.dp) // Ukuran lingkaran floating
+                .clip(CircleShape)
+                .background(colorResource(id = R.color.navbar_icon_background))
+                .clickable(onClick = {
+                    navController.navigate(BottomBarScreen.Cashier.route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                    }
+                }),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = if (currentDestination?.route == BottomBarScreen.Cashier.route) BottomBarScreen.Cashier.icon_focused else BottomBarScreen.Cashier.icon),
+                contentDescription = BottomBarScreen.Cashier.title,
+                tint = Color.White,
+                modifier = Modifier.size(52.dp) // Ukuran ikon floating
             )
         }
     }
-
 }
 
 @Composable
@@ -86,42 +121,40 @@ fun AddItem(
 ) {
     val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
 
-    val background =
-        if (selected) colorResource(id = R.color.navbar_icon_background) // Warna merah dari colors.xml
-        else Color.Transparent
-
-    val contentColor =
-        if (selected) Color.White else Color.Black
-
-    Box(
+    Column(
         modifier = Modifier
-            .height(40.dp)
-            .clip(CircleShape)
-            .background(background)
+            .width(74.dp) // Setiap item memiliki lebar 74dp
             .clickable(onClick = {
                 navController.navigate(screen.route) {
                     popUpTo(navController.graph.findStartDestination().id)
                     launchSingleTop = true
                 }
-            })
+            }),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Row(
-            modifier = Modifier
-                .padding(start = 10.dp, end = 10.dp, top = 8.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            androidx.compose.material3.Icon(
-                painter = painterResource(id = if (selected) screen.icon_focused else screen.icon),
-                contentDescription = "icon",
-                tint = contentColor
+        Icon(
+            painter = painterResource(id = if (selected) screen.icon_focused else screen.icon),
+            contentDescription = screen.title,
+            modifier = Modifier.size(24.dp), // Ikon berukuran 24dp
+            tint = Color.Unspecified
+        )
+        Spacer(modifier = Modifier.height(4.dp)) // Jarak kecil antara ikon dan teks
+        // Menambahkan animasi visibilitas pada teks
+        AnimatedVisibility(visible = selected) {
+            Text(
+                text = screen.title,
+                fontSize = 12.sp, // Font ukuran 12sp
+                color = (textbutton)
             )
-            AnimatedVisibility(visible = selected) {
-                Text(
-                    text = screen.title,
-                    color = contentColor
-                )
-            }
         }
     }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun BottomBarPreview() {
+    val navController = rememberNavController()
+    BottomBar(navController)
 }
