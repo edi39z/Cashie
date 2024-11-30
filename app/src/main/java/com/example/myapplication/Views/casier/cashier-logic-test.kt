@@ -39,17 +39,26 @@ import com.example.myapplication.ui.theme.Yellow
 @Composable
 fun kasir(){
 //    private val db = FirebaseFirestore.getInstance()
-    val item = mapOf(
-        "kode" to "0",
-        "nama" to "indomie",
-        "stok" to 10,
-        "harga" to 3000
-    )
-    val preview = listOf(
-        mutableMapOf("nama" to "indomie", "jumlah" to null, "harga" to 3000),
-        mutableMapOf("kode" to "0", "nama" to "indomie", "jumlah" to null, "harga" to 3000),
-        mutableMapOf("kode" to "0", "nama" to "indomie", "jumlah" to null, "harga" to 3000)
-    )
+    val item by remember {
+        mutableStateOf(
+            mutableMapOf(
+                "kode" to "0",
+                "nama" to "indomie",
+                "stok" to 10,
+                "harga" to 3000
+            )
+        )
+    }
+
+    val previewList by remember {
+        mutableStateOf(
+            mutableListOf(
+                mutableMapOf("nama" to "indomie", "jumlah" to 1, "harga" to 3000),
+                mutableMapOf("kode" to "0", "nama" to "indomie", "jumlah" to 1, "harga" to 3000),
+                mutableMapOf("kode" to "0", "nama" to "indomie", "jumlah" to 1, "harga" to 3000)
+            )
+        )
+    }
 
     var kodeBarang by remember { mutableStateOf("") }
     var isCheck by remember { mutableStateOf(true) }
@@ -60,8 +69,8 @@ fun kasir(){
             value = kodeBarang,
             onValueChange = {
                 if (kodeBarang == item["kode"]){
-                    preview[0]["nama"] = item["nama"]
-                    preview[0]["jumlah"] = 1
+                    previewList[0]["nama"] = item["nama"] as String
+                    previewList[0]["jumlah"] = 1
                     isCheck = false
                 }
             },
@@ -81,7 +90,7 @@ fun kasir(){
                 Button(
                     onClick = {
                         if (isCheck == false){
-                            preview[0]["jumlah"] = (preview[0]["jumlah"] as Int)*2
+                            previewList[0]["jumlah"] = (previewList[0]["jumlah"] as Int)*2
                             isCheck = true
                         }
                     },
@@ -168,28 +177,35 @@ fun kasir(){
                         )
                     }
                     Spacer(Modifier.size(8.dp))
-//                    for (i in previewList) {
-//                        Row(
-//                            modifier = Modifier.fillMaxWidth(),
-//                            horizontalArrangement = Arrangement.SpaceBetween
-//                        ) {
-//                            Text(
-//                                text = kodeBarang.name,
-//                                fontSize = 9.sp,
-//                            )
-//                            Text(
-//                                kodeBarang.jumlah,
-//                                fontSize = 9.sp
-//                            )
-//                            Text(
-//                                kodeBarang.harga,
-//                                fontSize = 9.sp
-//                            )
-//                        }
-//                    }
+
+                    previewList.forEach { map ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            // Safe access and proper casting
+                            Text(
+                                text = map["nama"] as? String ?: "Unknown", // Default to "Unknown" if null
+                                fontSize = 9.sp,
+                            )
+                            Text(
+                                text = (map["jumlah"] as? Int)?.toString() ?: "0", // Convert Int to String
+                                fontSize = 9.sp
+                            )
+                            Text(
+                                text = (map["harga"] as? Int)?.toString() ?: "0", // Convert Int to String
+                                fontSize = 9.sp
+                            )
+                        }
+                    }
+
                 }
                 Button(
-                    onClick = {},
+                    onClick = {
+                        previewList.forEach { map ->
+                            item["stok"] = (item["stok"] as Int) - (map["jumlah"] as Int)
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(Yellow),
                     contentPadding = PaddingValues(0.dp),
                     modifier = Modifier
@@ -199,7 +215,7 @@ fun kasir(){
                         .align(Alignment.BottomEnd)
                 ) {
                     Text(
-                        "Next",
+                        "Next  ${item["stok"]}",
                         color = Color.Black,
                         fontSize = 10.sp
                     )
