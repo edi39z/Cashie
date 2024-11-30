@@ -14,4 +14,14 @@ val Logo = Color(0xFF03AED2)
 val Blue = Color(0xFF68D2E8)
 val Yellow = Color(0xFFFDDE55)
 val Gray = Color(0xFFD9D9D9)
+
+
+
 val Background = Color(0xFFF2F3F4)
+val BackGround2 = Color(0xFF68D2E8)
+val textLogo = Color(0xFF03AED2)
+val text = Color(0xFF303131)
+val textbutton = Color(0xFFF2F3F4)
+val textbutton2 = Color(0xFF303131)
+val button = Color(0xFF03AED2)
+val button2 = Color (0xFFFDDE55)

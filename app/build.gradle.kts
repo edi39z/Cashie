@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     implementation(libs.firebase.database.ktx)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -100,10 +101,6 @@ dependencies {
     implementation(libs.codescanner)
     implementation(libs.gpsCoroutines)
     implementation(libs.timber)
-
-
-
-
 
 
         val composeBom = platform("androidx.compose:compose-bom:2024.09.03")

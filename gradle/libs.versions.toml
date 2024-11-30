@@ -30,6 +30,7 @@ playServicesAuth = "21.2.0"
 firebaseDatabaseKtx = "21.0.0"
 navigationRuntimeKtx = "2.8.4"
 navigationCompose = "2.8.4"
+googleid = "1.1.1"
 
 
 [libraries]
@@ -83,6 +84,7 @@ firebase-database-ktx = { group = "com.google.firebase", name = "firebase-databa
 
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 
 
 [plugins]

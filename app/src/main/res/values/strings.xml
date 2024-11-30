@@ -15,4 +15,6 @@
     <string name="view_past_t">View past transactions, products sold, and \nrevenue at a glance with detailed sales \n history.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="web_client_id">999968586799-inelvmtmi8fdbvd5ecssmg9jhopa71nn.apps.googleusercontent.com</string>
+    <string name="google_sign_in">Login With Google</string>
 </resources>
