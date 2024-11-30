@@ -86,7 +86,7 @@ dependencies {
 
 
         implementation(libs.material3)
-        // or Material De
+        // or Material Design 2
         implementation(libs.androidx.material)
         // or skip Material Design and build directly on top of foundational components
         implementation(libs.androidx.foundation)
@@ -99,9 +99,7 @@ dependencies {
         debugImplementation(libs.ui.tooling)
 
 
-
         androidTestImplementation(libs.ui.test.junit4)
-
         debugImplementation(libs.ui.test.manifest)
 
 
