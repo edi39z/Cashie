@@ -17,11 +17,20 @@ activity = "1.9.2"
 constraintlayout = "2.1.4"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
+navigationFragmentKtx = "2.8.3"
+navigationUiKtx = "2.8.3"
+dotsindicator = "4.2"
+gpsCoroutines = "1.6.4"
+code-scanner = "16.0.0"
+timber = "5.0.1"
+
+
 playServicesAuth = "21.2.0"
 
 firebaseDatabaseKtx = "21.0.0"
 navigationRuntimeKtx = "2.8.4"
 navigationCompose = "2.8.4"
+googleid = "1.1.1"
 
 
 [libraries]
@@ -55,6 +64,14 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
+
+codescanner = {module = "com.google.android.gms:play-services-code-scanner", version.ref = "code-scanner"}
+gpsCoroutines = {module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "gpsCoroutines"}
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
 material3 = { module = "androidx.compose.material3:material3" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 ui = { module = "androidx.compose.ui:ui" }
@@ -67,6 +84,7 @@ firebase-database-ktx = { group = "com.google.firebase", name = "firebase-databa
 
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 
 
 [plugins]

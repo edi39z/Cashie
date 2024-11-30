@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "999968586799",
+    "firebase_url": "https://cashie-3e666-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "cashie-3e666",
-    "storage_bucket": "cashie-3e666.appspot.com"
+    "storage_bucket": "cashie-3e666.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +13,12 @@
           "package_name": "com.example.myapplication"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "999968586799-inelvmtmi8fdbvd5ecssmg9jhopa71nn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDaWJv4idZPXPpf5rBOgCQJYd597JBpcxY"
@@ -20,7 +26,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999968586799-inelvmtmi8fdbvd5ecssmg9jhopa71nn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
