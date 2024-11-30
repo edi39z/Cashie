@@ -1,7 +1,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/welcome_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".welcome1">
@@ -45,40 +45,5 @@
         app:layout_constraintStart_toStartOf="@+id/mobile_cash"
         app:layout_constraintTop_toBottomOf="@+id/mobile_cash" />
 
-    <!-- Dots Indicator -->
-    <LinearLayout
-        android:id="@+id/dotsIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/simplify_yo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_active" />
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_inactive" />
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_inactive" />
-
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/dot_inactive" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
