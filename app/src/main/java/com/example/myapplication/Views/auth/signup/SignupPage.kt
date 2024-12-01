@@ -190,11 +190,13 @@ fun SignupPage(
                 // Tombol sigup
                 Button(
                     onClick = {
-                        viewModel.signUpWithEmailAndPassword {
-                        }
-                        navController.navigate("home")
+                        viewModel.signUpWithEmailAndPassword(
+                            onLoginSuccess = {
+                                // Navigasi hanya dilakukan jika pembuatan akun berhasil
+                                navController.navigate("register")
+                            }
+                        )
                     },
-//                    enabled = authState.value != AuthResponse.Loading,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
@@ -203,6 +205,7 @@ fun SignupPage(
                 ) {
                     Text(text = "Create Account", color = Color.White)
                 }
+
 
 
                 Spacer(modifier = Modifier.height(30.dp))

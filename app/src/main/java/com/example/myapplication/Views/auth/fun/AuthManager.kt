@@ -1,4 +1,4 @@
-package com.example.myapplication.views.auth.`fun`;
+package com.example.myapplication.views.auth.`fun`
 
 import android.content.Context
 import android.util.Log
@@ -43,7 +43,6 @@ class AuthManager(private val context: Context) {
         awaitClose()
     }
 
-
     fun loginWithEmailAndPassword(
         email: String,
         password: String,
@@ -73,6 +72,14 @@ class AuthManager(private val context: Context) {
         confirmPassword: String,
         onLoginSuccess: () -> Unit
     ) {
+        if (email.isBlank()) {
+            Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (password.isBlank() || confirmPassword.isBlank()) {
+            Toast.makeText(context, "Password tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            return
+        }
         if (password != confirmPassword) {
             Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
             return
@@ -141,7 +148,6 @@ class AuthManager(private val context: Context) {
             .addCredentialOption(googleIdOption)
             .build()
 
-
         try {
             val credentialManager = CredentialManager.create(context)
             val result = credentialManager.getCredential(
@@ -172,8 +178,6 @@ class AuthManager(private val context: Context) {
                     }
                 }
             }
-
-
         } catch (e: Exception) {
             Log.d("error", e.toString())
         }
@@ -181,7 +185,6 @@ class AuthManager(private val context: Context) {
 }
 
 sealed interface AuthResponse {
-    data object  Loading : AuthResponse
     data object Success : AuthResponse
     data class Error(val message: String) : AuthResponse
 }

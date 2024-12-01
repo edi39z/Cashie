@@ -13,25 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.views.casier.`fun`.BarcodeScanner
 
-class Scanner : ComponentActivity() {
 
-    private lateinit var barcodeScanner: BarcodeScanner
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Pastikan BarcodeScanner didefinisikan dengan benar
-        barcodeScanner = BarcodeScanner(this)
-        setContent {
-            ScannerScreen(barcodeScanner)
-        }
-    }
-}
 
 @Composable
-fun ScannerScreen(barcodeScanner: BarcodeScanner) {
+fun ScannerScreen(barcodeScanner: BarcodeScanner, navController: NavController) {
     var scanResult by remember { mutableStateOf<String?>(null) }
     var isScanning by remember { mutableStateOf(false) }
 

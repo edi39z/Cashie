@@ -12,11 +12,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.data.User
 import com.example.myapplication.views.casier.CashierPage
 import com.example.myapplication.views.history.HistoryPage
 import com.example.myapplication.views.home.HomePage
 import com.example.myapplication.views.database.DataPage
-import com.example.myapplication.views.profile.ProfilePage
+import com.example.myapplication.views.profile.ProfilePageWithViewModel
 
 
 @Composable
@@ -43,19 +44,20 @@ fun BottomNavGraph(navHostController: NavController) {
                     HomePage(navHostController)
                 }
                 composable(route = BottomBarScreen.Databases.route) {
-                    DataPage()
+                    DataPage(navController)
                 }
                 composable(route = BottomBarScreen.Cashier.route) {
-                    CashierPage(navHostController)
+                    CashierPage(navController)
                 }
                 composable(route = BottomBarScreen.History.route) {
                     HistoryPage()
                 }
                 composable(route = BottomBarScreen.Profiel.route) {
-                   ProfilePage()
+                    ProfilePageWithViewModel()
+                }
                 }
             }
         }
     }
-}
+
 

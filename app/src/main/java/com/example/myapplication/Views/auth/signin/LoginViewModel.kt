@@ -21,11 +21,11 @@ class LoginViewModel(
     val isPasswordVisible = _isPasswordVisible.asStateFlow()
 
     fun updateEmail(newEmail: String) {
-        _email.value = newEmail
+        _email.value = newEmail.replace(" ", "")
     }
 
     fun updatePassword(newPassword: String) {
-        _password.value = newPassword
+        _password.value = newPassword.replace(" ", "")
     }
 
     fun togglePasswordVisibility() {
