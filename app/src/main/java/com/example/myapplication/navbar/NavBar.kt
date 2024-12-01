@@ -1,5 +1,6 @@
 package com.example.myapplication.navbar
 
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,7 +34,7 @@ import com.example.myapplication.ui.theme.textbutton
 import com.example.myapplication.ui.theme.textbutton2
 
 @Composable
-fun NavBar(navController: NavController) {
+fun NavBar(navController: NavController,appContext: Context) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = { BottomBar(navController = navController as NavHostController) },
@@ -44,7 +45,7 @@ fun NavBar(navController: NavController) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            BottomNavGraph(navController)
+            BottomNavGraph(navHostController = navController, appContext = appContext)
         }
     }
 }

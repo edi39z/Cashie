@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.user
 
 import android.content.Context
 import android.util.Log
@@ -14,6 +14,7 @@ fun SaveUserDataToFirestore(user: User, context: Context, callback: (Boolean) ->
         if (reloadTask.isSuccessful) {
             val userMap = mapOf(
                 "name" to user.name,
+                "toko" to user.toko,
                 "email" to user.email,
                 "country" to user.country,
                 "dateOfBirth" to user.dateOfBirth,

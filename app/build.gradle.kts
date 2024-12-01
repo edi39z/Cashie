@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.myapplication"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.myapplication"
         minSdk = 29
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.googleid)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.play.services.mlkit.barcode.scanning)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -135,7 +136,7 @@ dependencies {
         implementation(libs.androidx.material.icons.extended)
 
         implementation(libs.androidx.adaptive)
-
+    implementation (libs.barcode.scanning)
 
         implementation(libs.androidx.activity.compose.v193)
         implementation(libs.androidx.lifecycle.viewmodel.compose)

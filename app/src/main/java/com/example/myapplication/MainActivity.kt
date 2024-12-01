@@ -18,15 +18,15 @@ class MainActivity : ComponentActivity() {
 //        enableEdgeToEdge()
         val authManager = AuthManager(this)
         setContent {
-            MyApplicationTheme  {
+            MyApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Navigation(
                         modifier = Modifier.padding(innerPadding),
-                        authManager = authManager
+                        authManager = authManager,
+                        appContext = this@MainActivity // Mengirimkan konteks ke Navigation
                     )
                 }
             }
         }
     }
 }
-

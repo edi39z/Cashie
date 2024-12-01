@@ -1,5 +1,6 @@
 package com.example.myapplication.`fun`
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -13,7 +14,7 @@ import com.example.myapplication.views.auth.signup.SignupPage
 
 
 @Composable
-fun Navigation( modifier : Modifier = Modifier, authManager: AuthManager){
+fun Navigation( modifier : Modifier = Modifier, authManager: AuthManager,appContext: Context){
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -30,7 +31,10 @@ fun Navigation( modifier : Modifier = Modifier, authManager: AuthManager){
         }
 
         composable("home"){
-            BottomNavGraph(navController)
+            BottomNavGraph(
+                navHostController = navController,
+                appContext = appContext
+            )
         }
     }
 }

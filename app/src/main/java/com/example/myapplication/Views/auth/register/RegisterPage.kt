@@ -58,11 +58,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapplication.R
-import com.example.myapplication.data.SaveUserDataToFirestore
-import com.example.myapplication.data.User
+import com.example.myapplication.user.SaveUserDataToFirestore
+import com.example.myapplication.user.User
 import com.example.myapplication.ui.theme.BackGround2
 import com.example.myapplication.ui.theme.Background
-import com.example.myapplication.ui.theme.button
 import com.example.myapplication.ui.theme.textLogo
 import com.example.myapplication.ui.theme.textbutton
 import com.example.myapplication.ui.theme.textbutton2
@@ -84,6 +83,7 @@ fun RegisterScreen(modifier: Modifier = Modifier, navController: NavController) 
     val dateOfBirth by viewModel.dateOfBirth.collectAsState()
     val showDatePicker by viewModel.showDatePicker.collectAsState()
     val gender by viewModel.gender.collectAsState()
+    val toko by viewModel.toko.collectAsState()
 
     // Warna dan konteks
     val textFieldColor = BackGround2
@@ -194,6 +194,26 @@ fun RegisterScreen(modifier: Modifier = Modifier, navController: NavController) 
                     ),
                     textStyle = LocalTextStyle.current.copy(color = Color.Black)
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Toko
+                TextField(
+                    value = toko,
+                    onValueChange = { viewModel.updateToko(it) },
+                    label = { Text("Nama Toko", color = textColor,fontSize = 13.sp) },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.medium,
+                    colors = TextFieldDefaults.colors().copy(
+                        focusedContainerColor = textFieldColor,
+                        unfocusedContainerColor = textFieldColor,
+                        cursorColor = Color.Black,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent
+                    ),
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black)
+                )
+
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -312,6 +332,7 @@ fun RegisterScreen(modifier: Modifier = Modifier, navController: NavController) 
                                     (
                                     id = Firebase.auth.currentUser!!.uid,
                                     name = firstname,
+                                    toko = toko,
                                     email = currentUser.email.toString(),
                                     country = "Indonesia",
                                     dateOfBirth = dateOfBirth,

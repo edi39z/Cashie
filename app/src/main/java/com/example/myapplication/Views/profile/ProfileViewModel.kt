@@ -2,7 +2,7 @@ package com.example.myapplication.views.profile
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.data.User
+import com.example.myapplication.user.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.MutableStateFlow
