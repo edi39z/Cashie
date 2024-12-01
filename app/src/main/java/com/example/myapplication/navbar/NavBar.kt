@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -29,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.textbutton
+import com.example.myapplication.ui.theme.textbutton2
 
 @Composable
 fun NavBar(navController: NavController) {
@@ -63,13 +65,15 @@ fun BottomBar(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(72.dp) // Tinggi navbar
+            .height(56.dp)
+
     ) {
         // Navbar dengan potongan (cutout)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(72.dp) // Tinggi navbar tanpa floating
+                .height(56.dp) // Tinggi navbar tanpa floating
+                .shadow(6.dp, shape = RoundedCornerShape(2.dp)) // Shadow lebih nampak
                 .background(colorResource(id = R.color.navbar)),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
@@ -82,7 +86,7 @@ fun BottomBar(navController: NavHostController) {
                         navController = navController
                     )
                 } else {
-                    Spacer(modifier = Modifier.width(74.dp)) // Ruang untuk floating icon
+                    Spacer(modifier = Modifier.width(64.dp)) // Ruang untuk floating icon
                 }
             }
         }
@@ -91,8 +95,8 @@ fun BottomBar(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter) // Posisi di tengah
-                .offset(y = (-36).dp) // Mengapung di atas navbar
-                .size(72.dp) // Ukuran lingkaran floating
+                .offset(y = (-28).dp) // Mengapung di atas navbar
+                .size(74.dp) // Ukuran lingkaran floating
                 .clip(CircleShape)
                 .background(colorResource(id = R.color.navbar_icon_background))
                 .clickable(onClick = {
@@ -107,7 +111,7 @@ fun BottomBar(navController: NavHostController) {
                 painter = painterResource(id = if (currentDestination?.route == BottomBarScreen.Cashier.route) BottomBarScreen.Cashier.icon_focused else BottomBarScreen.Cashier.icon),
                 contentDescription = BottomBarScreen.Cashier.title,
                 tint = Color.White,
-                modifier = Modifier.size(52.dp) // Ukuran ikon floating
+                modifier = Modifier.size(52.dp)
             )
         }
     }
@@ -123,7 +127,7 @@ fun AddItem(
 
     Column(
         modifier = Modifier
-            .width(74.dp) // Setiap item memiliki lebar 74dp
+            .width(69.dp)
             .clickable(onClick = {
                 navController.navigate(screen.route) {
                     popUpTo(navController.graph.findStartDestination().id)
@@ -136,16 +140,16 @@ fun AddItem(
         Icon(
             painter = painterResource(id = if (selected) screen.icon_focused else screen.icon),
             contentDescription = screen.title,
-            modifier = Modifier.size(24.dp), // Ikon berukuran 24dp
+            modifier = Modifier.size(22.dp),
             tint = Color.Unspecified
         )
-        Spacer(modifier = Modifier.height(4.dp)) // Jarak kecil antara ikon dan teks
-        // Menambahkan animasi visibilitas pada teks
+        Spacer(modifier = Modifier.height(0.dp))
+
         AnimatedVisibility(visible = selected) {
             Text(
                 text = screen.title,
                 fontSize = 12.sp, // Font ukuran 12sp
-                color = (textbutton)
+                color = (textbutton2)
             )
         }
     }
