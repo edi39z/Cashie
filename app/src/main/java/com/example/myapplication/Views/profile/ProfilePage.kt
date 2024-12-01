@@ -4,20 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
-import com.example.myapplication.data.User
+import com.example.myapplication.user.User
 
 @Composable
 fun ProfilePage(user: User) {
@@ -62,6 +58,14 @@ fun ProfilePage(user: User) {
             text = if (user.name.isNotEmpty()) user.name else "Unknown User",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // toko
+        Text(
+            text = "Toko: ${user.toko.ifEmpty { "Not Available" }}",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium
         )
 
         Spacer(modifier = Modifier.height(8.dp))

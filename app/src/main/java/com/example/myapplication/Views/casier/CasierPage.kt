@@ -1,8 +1,5 @@
 package com.example.myapplication.views.casier
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -16,18 +13,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.views.casier.`fun`.BarcodeScanner
-
-
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScannerScreen(barcodeScanner: BarcodeScanner, navController: NavController) {
+    val coroutineScope = rememberCoroutineScope()
     var scanResult by remember { mutableStateOf<String?>(null) }
     var isScanning by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White) // Menambahkan background putih
+            .background(Color.White) // Background putih
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -36,13 +33,14 @@ fun ScannerScreen(barcodeScanner: BarcodeScanner, navController: NavController) 
             onClick = {
                 if (!isScanning) {
                     isScanning = true
-                    barcodeScanner.startScanInBackground { result ->
+                    coroutineScope.launch {
+                        val result = barcodeScanner.startScan()
                         scanResult = result
                         isScanning = false
                     }
                 }
             },
-            enabled = true,
+            enabled = !isScanning,
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(Color(0xFFFDDE55)),
             modifier = Modifier
@@ -57,7 +55,6 @@ fun ScannerScreen(barcodeScanner: BarcodeScanner, navController: NavController) 
             )
         }
 
-        // Jika hasil scan ada, tampilkan teks tambahan dengan nilai barcode
         if (scanResult != null) {
             Text(
                 text = "Hasil Barcode: $scanResult",
@@ -74,6 +71,3 @@ fun ScannerScreen(barcodeScanner: BarcodeScanner, navController: NavController) 
         }
     }
 }
-
-
-
