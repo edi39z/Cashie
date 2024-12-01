@@ -1,28 +1,31 @@
 package com.example.myapplication.navbar
 
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.data.User
-import com.example.myapplication.views.casier.CashierPage
+import com.example.myapplication.views.casier.ScannerScreen
+import com.example.myapplication.views.database.DataPage
 import com.example.myapplication.views.history.HistoryPage
 import com.example.myapplication.views.home.HomePage
-import com.example.myapplication.views.database.DataPage
 import com.example.myapplication.views.profile.ProfilePageWithViewModel
 
 
 @Composable
-fun BottomNavGraph(navHostController: NavController) {
+fun BottomNavGraph(navHostController: NavController, appContext: Context) {
     val navController = rememberNavController()
+    val barcodeScanner = remember { com.example.myapplication.views.casier.`fun`.BarcodeScanner(appContext = appContext) }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -47,7 +50,10 @@ fun BottomNavGraph(navHostController: NavController) {
                     DataPage(navController)
                 }
                 composable(route = BottomBarScreen.Cashier.route) {
-                    CashierPage(navController)
+                    ScannerScreen(
+                        barcodeScanner = barcodeScanner,
+                        navController = navController
+                    )
                 }
                 composable(route = BottomBarScreen.History.route) {
                     HistoryPage()
@@ -55,9 +61,10 @@ fun BottomNavGraph(navHostController: NavController) {
                 composable(route = BottomBarScreen.Profiel.route) {
                     ProfilePageWithViewModel()
                 }
-                }
             }
         }
     }
+}
+
 
 
