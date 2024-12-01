@@ -39,13 +39,23 @@ import com.example.myapplication.ui.theme.Yellow
 @Composable
 fun kasir(){
 //    private val db = FirebaseFirestore.getInstance()
+
     val item by remember {
         mutableStateOf(
-            mutableMapOf(
-                "kode" to "0",
-                "nama" to "indomie",
-                "stok" to 10,
-                "harga" to 3000
+            mutableListOf(
+                mutableMapOf(
+                    "kode" to "0",
+                    "nama" to "indomie",
+                    "stok" to 10,
+                    "harga" to 3000
+                ),
+                mutableMapOf(
+                    "kode" to "1",
+                    "nama" to "Sabun",
+                    "stok" to 10,
+                    "harga" to 3000
+                )
+//                daftar stok barang
             )
         )
     }
@@ -53,9 +63,8 @@ fun kasir(){
     val previewList by remember {
         mutableStateOf(
             mutableListOf(
-                mutableMapOf("nama" to "indomie", "jumlah" to 1, "harga" to 3000),
-                mutableMapOf("kode" to "0", "nama" to "indomie", "jumlah" to 1, "harga" to 3000),
-                mutableMapOf("kode" to "0", "nama" to "indomie", "jumlah" to 1, "harga" to 3000)
+                mutableMapOf("nama" to "", "jumlah" to 0, "harga" to 0),
+//                data selanjutnya jika ada ditambah
             )
         )
     }
@@ -67,9 +76,15 @@ fun kasir(){
     Column {
         TextField(
             value = kodeBarang,
-            onValueChange = {
-                if (kodeBarang == item["kode"]){
-                    previewList[0]["nama"] = item["nama"] as String
+            onValueChange = { input ->
+                kodeBarang = input // Update kodeBarang dengan nilai baru dari pengguna
+
+                // Cari indeks berdasarkan kode
+                val index = item.indexOfFirst { it["kode"] == kodeBarang }
+
+                // Jika ditemukan, lakukan sesuatu
+                if (index != -1) {
+                    previewList[0]["nama"] = item[index]["nama"] as String
                     previewList[0]["jumlah"] = 1
                     isCheck = false
                 }
@@ -203,7 +218,7 @@ fun kasir(){
                 Button(
                     onClick = {
                         previewList.forEach { map ->
-                            item["stok"] = (item["stok"] as Int) - (map["jumlah"] as Int)
+                            item[0]["stok"] = (item[0]["stok"] as Int) - (map["jumlah"] as Int)
                         }
                     },
                     colors = ButtonDefaults.buttonColors(Yellow),
@@ -215,7 +230,7 @@ fun kasir(){
                         .align(Alignment.BottomEnd)
                 ) {
                     Text(
-                        "Next  ${item["stok"]}",
+                        "Next  ${item[0]["stok"]}",
                         color = Color.Black,
                         fontSize = 10.sp
                     )
