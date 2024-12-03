@@ -10,18 +10,15 @@ import kotlinx.coroutines.flow.StateFlow
 
 class ProfileViewModel : ViewModel() {
 
-    // StateFlow untuk mengelola data user
+
     private val _user = MutableStateFlow<User?>(null)
     val user: StateFlow<User?> = _user
 
     init {
-        // Memuat data pengguna saat ViewModel diinisialisasi
+
         fetchUserData()
     }
 
-    /**
-     * Mendapatkan data pengguna dari Firestore
-     */
     private fun fetchUserData() {
         val firestore = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid

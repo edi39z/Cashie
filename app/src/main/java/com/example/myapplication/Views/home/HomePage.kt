@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,100 +35,125 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.navbar.BottomBarScreen
 import com.example.myapplication.ui.theme.Blue
 import com.example.myapplication.views.auth.`fun`.AuthManager
+import com.example.myapplication.views.profile.ProfileViewModel
 
 
 @Composable
-fun HomePage(navMainController: NavController) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+fun HomePage(navMainController: NavController, profileViewModel: ProfileViewModel) {
+    // Mendapatkan data pengguna dari StateFlow
+    val userState = profileViewModel.user.collectAsState(initial = null)
+    val user = userState.value
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Blue)
+    ) {
+        // Header
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Blue)
+                .fillMaxWidth()
+                .background(Color.White)
+                .padding(horizontal = 40.dp, vertical = 21.dp)
         ) {
-            // Header
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.White)
-                    .padding(horizontal = 40.dp, 21.dp)
-            ) {
+            // Foto Profil
+            if (user?.photoUrl.isNullOrEmpty().not()) {
                 Image(
-                    painter = painterResource(id = android.R.drawable.ic_menu_camera),
+                    painter = rememberAsyncImagePainter(user?.photoUrl),
                     contentDescription = "Foto Profil",
                     modifier = Modifier
                         .size(52.dp)
                         .background(Color.Gray, CircleShape)
                         .align(Alignment.CenterStart)
                 )
-                Image(
-                    painter = painterResource(id = R.drawable.cashie),
-                    contentDescription = "cashie logo",
+            } else {
+                // Placeholder jika tidak ada foto
+                Box(
                     modifier = Modifier
-                        .width(70.dp)
-                        .align(Alignment.Center)
-                )
-                val context = LocalContext.current
-                // Icon Keluar
-                androidx.compose.material.Icon(
-
-                    painter = painterResource(id = R.drawable.logout),
-                    contentDescription = "Keluar",
-                    modifier = Modifier.size(24.dp).clickable {
-                        AuthManager(context).signOut()
-                        Log.d("cobs", "$navMainController")
-                        navMainController?.navigate("login")
-
-                    }
-                        .align(Alignment.CenterEnd),
-                    tint = Color.Black
-                )
-            }
-            
-            Column (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(41.dp, 31.dp)
-            ){
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                ){
+                        .size(52.dp)
+                        .background(Color.Gray, CircleShape)
+                        .align(Alignment.CenterStart),
+                    contentAlignment = Alignment.Center
+                ) {
                     Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontWeight = FontWeight(300),
-                                    fontSize = 15.sp,
-                                )
-                            ) {
-                                append("Welcome,\n")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontSize = 27.sp,
-                                    fontWeight = FontWeight(700)
-                                )
-                            ) {
-                                append("Aqilla Zia Maira\n") // Nama pengguna
-                            }
-                            append("\n")
-                            withStyle(
-                                style = SpanStyle(
-                                    fontWeight = FontWeight(700),
-                                    fontSize = 16.sp,
-                                    color = Color(0x7A303131)
-                                )
-                            ) {
-                                append("UD. SEJAHTERA UTAMA") // Nama toko
-                            }
-                        }
+                        text = "N/A",
+                        color = Color.White,
+                        fontSize = 12.sp
                     )
                 }
-
             }
+
+            // Logo
+            Image(
+                painter = painterResource(id = R.drawable.cashie),
+                contentDescription = "cashie logo",
+                modifier = Modifier
+                    .width(70.dp)
+                    .align(Alignment.Center)
+            )
+
+            val context = LocalContext.current
+            // Icon Keluar
+            androidx.compose.material.Icon(
+                painter = painterResource(id = R.drawable.logout),
+                contentDescription = "Keluar",
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable {
+                        AuthManager(context).signOut()
+                        navMainController.navigate("login")
+                    }
+                    .align(Alignment.CenterEnd),
+                tint = Color.Black
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 41.dp, vertical = 31.dp)
+        ) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                // Nama pengguna dan nama toko
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight(300),
+                                fontSize = 15.sp,
+                            )
+                        ) {
+                            append("Welcome,\n")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                fontSize = 27.sp,
+                                fontWeight = FontWeight(700)
+                            )
+                        ) {
+                            append(user?.name ?: "Guest\n") // Nama pengguna
+                        }
+                        append("\n")
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight(700),
+                                fontSize = 16.sp,
+                                color = Color(0x7A303131)
+                            )
+                        ) {
+                            append(user?.toko ?: "No Shop Found") // Nama toko
+                        }
+                    }
+                )
+            }
+        }
+
             // Konten HomePage
             Column(
                 modifier = Modifier
@@ -154,7 +180,7 @@ fun HomePage(navMainController: NavController) {
 
                 CustomBox(
                     title = "Database",
-                    subtitle = "15 Products",
+                    subtitle = "",
                     imageRes = R.drawable.database_img,
                     onClick = { navMainController.navigate(BottomBarScreen.Databases.route) }
                 )
@@ -219,10 +245,3 @@ fun CustomBox(title: String, subtitle: String, imageRes: Int, onClick: () -> Uni
     }
 }
 
-
-
-@Preview(showBackground = true)
-@Composable
-fun HomePagePreview() {
-    HomePage(navMainController = NavController(LocalContext.current))
-}

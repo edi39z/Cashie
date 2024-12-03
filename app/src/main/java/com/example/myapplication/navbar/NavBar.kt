@@ -3,6 +3,7 @@ package com.example.myapplication.navbar
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -98,8 +99,13 @@ fun BottomBar(navController: NavHostController) {
                 .align(Alignment.TopCenter) // Posisi di tengah
                 .offset(y = (-28).dp) // Mengapung di atas navbar
                 .size(74.dp) // Ukuran lingkaran floating
-                .clip(CircleShape)
-                .background(colorResource(id = R.color.navbar_icon_background))
+                .clip(CircleShape) // Membentuk lingkaran penuh
+                .background(colorResource(id = R.color.navbar_icon_background)) // Warna latar belakang
+                .border(
+                    width = 2.dp,
+                    color = Color.White, // Warna border putih untuk efek floating
+                    shape = CircleShape
+                )
                 .clickable(onClick = {
                     navController.navigate(BottomBarScreen.Cashier.route) {
                         popUpTo(navController.graph.findStartDestination().id)
@@ -109,12 +115,17 @@ fun BottomBar(navController: NavHostController) {
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painter = painterResource(id = if (currentDestination?.route == BottomBarScreen.Cashier.route) BottomBarScreen.Cashier.icon_focused else BottomBarScreen.Cashier.icon),
+                painter = painterResource(
+                    id = if (currentDestination?.route == BottomBarScreen.Cashier.route)
+                        BottomBarScreen.Cashier.icon_focused
+                    else
+                        BottomBarScreen.Cashier.icon
+                ),
                 contentDescription = BottomBarScreen.Cashier.title,
-                tint = Color.White,
-                modifier = Modifier.size(52.dp)
+                modifier = Modifier.size(52.dp) // Ukuran ikon di dalam lingkaran
             )
         }
+
     }
 }
 
@@ -128,7 +139,7 @@ fun AddItem(
 
     Column(
         modifier = Modifier
-            .width(69.dp)
+            .width(72.dp)
             .clickable(onClick = {
                 navController.navigate(screen.route) {
                     popUpTo(navController.graph.findStartDestination().id)
@@ -141,7 +152,7 @@ fun AddItem(
         Icon(
             painter = painterResource(id = if (selected) screen.icon_focused else screen.icon),
             contentDescription = screen.title,
-            modifier = Modifier.size(22.dp),
+            modifier = Modifier.size(24.dp),
             tint = Color.Unspecified
         )
         Spacer(modifier = Modifier.height(0.dp))

@@ -29,6 +29,17 @@ class ProductRepository {
         }
     }
 
+    fun listenToProducts(onProductsChange: (List<Product>) -> Unit) {
+        getUserProductsCollection()?.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+            val products = snapshot?.documents?.mapNotNull { it.toObject(Product::class.java) } ?: emptyList()
+            onProductsChange(products)
+        }
+    }
+
+
     // Menambahkan produk baru
     suspend fun addProduct(product: Product) {
         try {
@@ -54,24 +65,6 @@ class ProductRepository {
         try {
             val collection = getUserProductsCollection() ?: return
             collection.document(idProduk).delete().await()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    // Menambahkan dummy data
-    suspend fun addDummyData() {
-        val dummyProducts = listOf(
-            Product(id_produk = "P001", nama_produk = "Kopi Hitam", harga_produk = 15000.0, stock_produk = 25),
-            Product(id_produk = "P002", nama_produk = "Teh Manis", harga_produk = 12000.0, stock_produk = 40),
-            Product(id_produk = "P003", nama_produk = "Coklat Panas", harga_produk = 20000.0, stock_produk = 15)
-        )
-
-        try {
-            val collection = getUserProductsCollection() ?: return
-            for (product in dummyProducts) {
-                collection.document(product.id_produk).set(product).await()
-            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
