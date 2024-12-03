@@ -4,12 +4,10 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class ProductViewModel : ViewModel() {
 
@@ -21,7 +19,7 @@ class ProductViewModel : ViewModel() {
 
     // Validasi data produk sebelum ditambahkan/diupdate
     private fun validateProduct(product: Product): Boolean {
-        return product.nama_produk.isNotEmpty() && product.harga_produk > 0 && product.stock_produk >= 0
+        return product.name.isNotEmpty() && product.price > 0 && product.stock >= 0
     }
     fun listenToProducts() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
@@ -61,7 +59,7 @@ class ProductViewModel : ViewModel() {
         db.collection("users")
             .document(userId)
             .collection("products")
-            .whereEqualTo("id_barcode", product.id_barcode)
+            .whereEqualTo("id_barcode", product.barcode)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
@@ -71,7 +69,7 @@ class ProductViewModel : ViewModel() {
                     val newProductDoc = db.collection("users").document(userId).collection("products").document()
                     val generatedId = newProductDoc.id
                     newProductDoc
-                        .set(product.copy(id_produk = generatedId))
+                        .set(product.copy(id = generatedId))
                         .addOnSuccessListener {
                             Toast.makeText(context, "Produk berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
                             Log.d("Firestore", "Produk berhasil ditambahkan")
@@ -95,7 +93,7 @@ class ProductViewModel : ViewModel() {
             db.collection("users")
                 .document(userId)
                 .collection("products")
-                .document(product.id_produk)
+                .document(product.id)
                 .set(product)
                 .addOnSuccessListener {
                     Log.d("Firestore", "Produk berhasil diperbarui")

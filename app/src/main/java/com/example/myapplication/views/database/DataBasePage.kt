@@ -28,8 +28,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -93,14 +91,14 @@ fun DataPage(navController: NavController, productViewModel: ProductViewModel) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             val filteredProducts = products.filter {
-                it.nama_produk.contains(searchQuery, ignoreCase = true)
+                it.name.contains(searchQuery, ignoreCase = true)
             }
 
             items(filteredProducts) { product ->
                 ProductRow(
                     product = product,
                     onEditClick = {
-                        navController.navigate("EditProductScreen/${product.id_produk}")
+                        navController.navigate("EditProductScreen/${product.id}")
                     },
                     onDeleteClick = {
                         productToDelete = product
@@ -130,12 +128,12 @@ fun DataPage(navController: NavController, productViewModel: ProductViewModel) {
             onDismissRequest = { showDeleteConfirmationDialog = false },
             title = { Text(text = "Hapus Produk") },
             text = {
-                Text(text = "Apakah Anda yakin ingin menghapus produk \"${productToDelete?.nama_produk}\"?")
+                Text(text = "Apakah Anda yakin ingin menghapus produk \"${productToDelete?.name}\"?")
             },
             confirmButton = {
                 TextButton(onClick = {
-                    productViewModel.deleteProduct(productToDelete!!.id_produk)
-                    Log.d("ProductViewModel", "Product deleted: ${productToDelete!!.id_barcode}")
+                    productViewModel.deleteProduct(productToDelete!!.id)
+                    Log.d("ProductViewModel", "Product deleted: ${productToDelete!!.barcode}")
                     showDeleteConfirmationDialog = false
                 }) {
                     Text(text = "Hapus", color = Color.Red)
@@ -177,20 +175,20 @@ fun ProductRow(
                 modifier = Modifier.weight(3f)
             ) {
                 Text(
-                    text = product.nama_produk,
+                    text = product.name,
                     fontSize = 18.sp, // Font lebih besar untuk nama produk
                     color = Color.Black,
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(4.dp)) // Spasi antara elemen
                 Text(
-                    text = "Stock: ${product.stock_produk}",
+                    text = "Stock: ${product.stock}",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )
                 Spacer(modifier = Modifier.height(4.dp)) // Spasi antara elemen
                 Text(
-                    text = "Harga: Rp ${product.harga_produk}",
+                    text = "Harga: Rp ${product.price}",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )

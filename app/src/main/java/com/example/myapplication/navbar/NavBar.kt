@@ -122,7 +122,7 @@ fun BottomBar(navController: NavHostController) {
                         BottomBarScreen.Cashier.icon
                 ),
                 contentDescription = BottomBarScreen.Cashier.title,
-                modifier = Modifier.size(52.dp) // Ukuran ikon di dalam lingkaran
+                modifier = Modifier.size(35.dp) // Ukuran ikon di dalam lingkaran
             )
         }
 
