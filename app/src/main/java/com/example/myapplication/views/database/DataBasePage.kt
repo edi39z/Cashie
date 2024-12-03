@@ -51,6 +51,8 @@ fun DataPage(navController: NavController, productViewModel: ProductViewModel) {
     var productToDelete by remember { mutableStateOf<Product?>(null) }
     var searchQuery by remember { mutableStateOf("") } // State untuk menyimpan input pencarian
 
+
+
     LaunchedEffect(Unit) {
         productViewModel.listenToProducts()
     }
