@@ -41,7 +41,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun ProfilePage(user: User?, navController: NavController, profileViewModel: ProfileViewModel, navMainController: NavController) {
+fun     ProfilePage(user: User?, navController: NavController, profileViewModel: ProfileViewModel, navMainController: NavController) {
     val photoProfile = Firebase.auth.currentUser?.photoUrl.toString()
     val userState = profileViewModel.user.collectAsState(initial = null)
     val userDetails = userState.value
