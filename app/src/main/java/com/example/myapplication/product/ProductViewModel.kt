@@ -61,19 +61,17 @@ class ProductViewModel : ViewModel() {
         db.collection("users")
             .document(userId)
             .collection("products")
-            .whereEqualTo("id_produk", product.id_produk)
+            .whereEqualTo("id_barcode", product.id_barcode)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
                     // Jika produk dengan id_produk yang sama sudah ada
                     Toast.makeText(context, "Produk dengan ID ini sudah ada!", Toast.LENGTH_SHORT).show()
-                    Log.w("Firestore", "Produk dengan id_produk: ${product.id_produk} sudah ada")
                 } else {
-                    // Tambahkan produk baru
-                    db.collection("users")
-                        .document(userId)
-                        .collection("products")
-                        .add(product)
+                    val newProductDoc = db.collection("users").document(userId).collection("products").document()
+                    val generatedId = newProductDoc.id
+                    newProductDoc
+                        .set(product.copy(id_produk = generatedId))
                         .addOnSuccessListener {
                             Toast.makeText(context, "Produk berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
                             Log.d("Firestore", "Produk berhasil ditambahkan")
