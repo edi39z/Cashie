@@ -29,7 +29,7 @@ sealed class BottomBarScreen(
         route = "cashier",
         title = "Cashier",
         icon = R.drawable.casier,
-        icon_focused = R.drawable.casier_focused
+        icon_focused = R.drawable.casier
     )
 
     // for Hitory
