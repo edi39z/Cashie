@@ -1,6 +1,5 @@
 package com.example.myapplication.views.database
 
-import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,8 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.myapplication.product.ProductViewModel
-import com.example.myapplication.ui.theme.Background
-import com.example.myapplication.ui.theme.button
 
 @Composable
 fun EditProductPage(
@@ -44,12 +40,12 @@ fun EditProductPage(
 ) {
     // Menggunakan collectAsState untuk mengawasi perubahan
     val products by productViewModel.products.collectAsState(initial = emptyList())
-    val product = products.find { it.id_produk == productId }
+    val product = products.find { it.id == productId }
 
     if (product != null) {
-        var namaProduk by remember { mutableStateOf(product.nama_produk) }
-        var hargaProduk by remember { mutableStateOf(product.harga_produk.toString()) }
-        var stokProduk by remember { mutableStateOf(product.stock_produk.toString()) }
+        var namaProduk by remember { mutableStateOf(product.name) }
+        var hargaProduk by remember { mutableStateOf(product.price.toString()) }
+        var stokProduk by remember { mutableStateOf(product.stock.toString()) }
 
         Box(
             modifier = Modifier
@@ -111,9 +107,9 @@ fun EditProductPage(
                     Button(
                         onClick = {
                             val updatedProduct = product.copy(
-                                nama_produk = namaProduk,
-                                harga_produk = hargaProduk.toIntOrNull() ?: 0,
-                                stock_produk = stokProduk.toIntOrNull() ?: 0
+                                name = namaProduk,
+                                price = hargaProduk.toDoubleOrNull() ?: 0.0,
+                                stock = stokProduk.toIntOrNull() ?: 0
                             )
                             productViewModel.updateProduct(userId, updatedProduct) // Sertakan userId
                             navController.popBackStack()

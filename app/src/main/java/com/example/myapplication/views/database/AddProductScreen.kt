@@ -119,15 +119,15 @@ fun AddProductPage(
                 // Tombol untuk menyimpan produk
                 Button(
                     onClick = {
-                        if (productName.isBlank() || productPrice.toIntOrNull() == null || productStock.toIntOrNull() == null) {
+                        if (productName.isBlank() || productPrice.toDoubleOrNull() == null || productStock.toIntOrNull() == null) {
                             // Validasi input (tambahkan logika sesuai kebutuhan)
                             return@Button
                         }
                         val product = Product(
-                            id_barcode = idBarcode,
-                            nama_produk = productName,
-                            harga_produk = productPrice.toInt(),
-                            stock_produk = productStock.toInt()
+                            barcode = idBarcode,
+                            name = productName,
+                            price = productPrice.toDouble(),
+                            stock = productStock.toInt()
                         )
                         onProductAdded(product)
                     },

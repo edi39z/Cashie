@@ -1,6 +1,7 @@
 package com.example.myapplication.views.casier
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,11 +17,12 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -30,7 +32,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,42 +42,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.myapplication.R
+import com.example.myapplication.product.PreviewProduct
 import com.example.myapplication.product.Product
 import com.example.myapplication.ui.theme.Blue
 import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.ui.theme.Logo
 import com.example.myapplication.ui.theme.Yellow
-import com.example.myapplication.views.PreviewProduk
+import com.example.myapplication.views.casier.`fun`.BarcodeScanner
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 
-data class PreviewProduk(
-    val kode: String,
-    val nama: String,
-    var jumlah: Int,
-    var harga: Double
-)
-
 @Composable
-fun CashierPage() {
+fun CashierPage(barcodeScanner: BarcodeScanner) {
 
     val db = Firebase.firestore
     val items by remember { mutableStateOf(mutableMapOf<String, Product>()) }
-    val previewList = remember { mutableStateListOf<PreviewProduk>() }
+    val previewMap = remember { mutableStateMapOf<String, PreviewProduct>() }
     var kodeBarang by remember { mutableStateOf("") }
-    var isCheck by remember { mutableStateOf(false) }
-    val itemsCollection = db.collection("users").document("KxrhNm3yfzb4GUoEGjb2v1IJcue2").collection("products")
-
+    var isScanning by remember { mutableStateOf(false) }
+    var scanResult by remember { mutableStateOf<String?>(null) }
+    val coroutineScope = rememberCoroutineScope()
+    val itemsCollection = db.collection("users")
+        .document(Firebase.auth.currentUser!!.uid)
+        .collection("products")
     // Menggunakan LaunchedEffect untuk memuat data
     LaunchedEffect(Unit) {
         try {
@@ -83,7 +83,7 @@ fun CashierPage() {
             for (document in result.documents) {
                 val item = document.toObject(Product::class.java)
                 if (item != null) {
-                    items[item.id_produk] = item
+                    items[item.barcode] = item
                 }
             }
             Log.d("kasiee", "Items berhasil dimuat: $items")
@@ -112,33 +112,27 @@ fun CashierPage() {
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        Log.d("Kasir2", "Kode Barang: $kodeBarang")
                         val foundItem = items[kodeBarang]
-                        Log.d("kasiee", "Found Item: $foundItem")
-                        val checkPreviewList = previewList.find { it.kode == kodeBarang }
-                        Log.d("kasiee", foundItem.toString())
-
-                        foundItem?.let {
-                            Log.d("Kasiee", "Let: ${it.nama_produk}")
-                            if (checkPreviewList == null) {
-                                // Tambahkan item baru jika tidak ada di previewList
-                                previewList.add(
-                                    PreviewProduk(
-                                        kode = it.id_produk,
-                                        nama = it.nama_produk,
-                                        jumlah = 1,
-                                        harga = it.harga_produk.toDouble()
-                                    )
+                        if (foundItem != null) {
+                            val checkPreviewMap = previewMap[foundItem.id]
+                            if (checkPreviewMap != null) {
+                                val count = checkPreviewMap.count + 1
+                                val price = count * foundItem.price
+                                previewMap[foundItem.id] = checkPreviewMap.copy(
+                                    count = checkPreviewMap.count + 1,
+                                    price = price
                                 )
                             } else {
-                                // Cari index elemen di previewList dan update jumlahnya
-                                val index = previewList.indexOf(checkPreviewList)
-                                if (index >= 0) {
-                                    previewList[index] = checkPreviewList.copy(jumlah = checkPreviewList.jumlah + 1)
-                                }
+                                previewMap[foundItem.id] = PreviewProduct(
+                                    productId = foundItem.id,
+                                    name = foundItem.name,
+                                    barcode = foundItem.barcode,
+                                    count = 1,
+                                    price = foundItem.price
+                                )
+                                Log.d("ScanResult", previewMap.toString())
                             }
                         }
-
                     }
                 ) {
                     Icon(
@@ -167,19 +161,57 @@ fun CashierPage() {
         )
 
         Button(
-            onClick = {},
+            contentPadding = PaddingValues(0.dp),
+            onClick = {
+                if (!isScanning) {
+                    isScanning = true
+                    coroutineScope.launch {
+                        val result = barcodeScanner.startScan()
+                        scanResult = result
+                        isScanning = false
+
+                        // Tambahkan hasil scan ke previewList
+                        if (scanResult != null) {
+                            val foundItem = items[scanResult]
+                            if (foundItem != null) {
+                                val checkPreviewMap = previewMap[foundItem.id]
+                                if (checkPreviewMap != null) {
+                                    val count = checkPreviewMap.count + 1
+                                    val price = count * foundItem.price
+                                    previewMap[foundItem.id] = checkPreviewMap.copy(
+                                        count = checkPreviewMap.count + 1,
+                                        price = price
+                                    )
+                                } else {
+                                    previewMap[foundItem.id] = PreviewProduct(
+                                        productId = foundItem.id,
+                                        name = foundItem.name,
+                                        barcode = foundItem.barcode,
+                                        count = 1,
+                                        price = foundItem.price
+                                    )
+                                    Log.d("ScanResult", previewMap.toString())
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(Yellow),
             modifier = Modifier
-                .offset(y = -30.dp)
-                .size(70.dp) // Ukuran lingkaran
-                .clip(CircleShape) // Membuat bentuk lingkaran
+                .size(70.dp)
+                .clip(CircleShape)
         ) {
             Icon(
-                imageVector = Icons.Default.Face,
-                contentDescription = "camera button",
+                painter = painterResource(id = R.drawable.casier),
+                contentDescription = "Scanner",
+                modifier = Modifier
+                    .fillMaxSize()
+                    ,
                 tint = Color.Black
             )
         }
+
         Column(
             modifier = Modifier
                 .offset(y = -30.dp)
@@ -405,7 +437,9 @@ fun CashierPage() {
                             .fillMaxSize()
                     ) {
                         Column(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
                         ) {
                             // Add your table here
                             Row(
@@ -429,7 +463,7 @@ fun CashierPage() {
                                 )
                             }
                             Spacer(Modifier.size(8.dp))
-                            previewList.forEach { map ->
+                            previewMap.values.forEach { map ->
                                 Log.d("kasieerrrrr", map.toString())
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -437,15 +471,15 @@ fun CashierPage() {
                                 ) {
                                     // Safe access and proper casting
                                     Text(
-                                        text = map.nama, // Default to "Unknown" if null
+                                        text = map.name, // Default to "Unknown" if null
                                         fontSize = 9.sp,
                                     )
                                     Text(
-                                        text = map.jumlah.toString(), // Convert Int to String
+                                        text = map.count.toString(), // Convert Int to String
                                         fontSize = 9.sp
                                     )
                                     Text(
-                                        text = map.harga.toString(), // Convert Int to String
+                                        text = map.price.toString(), // Convert Int to String
                                         fontSize = 9.sp
                                     )
                                 }
@@ -454,29 +488,25 @@ fun CashierPage() {
 
                         val coroutineScope = rememberCoroutineScope()
 
+                        val context = LocalContext.current
                         Button(
                             onClick = {
                                 coroutineScope.launch {
-                                    previewList.forEach { itemPreview ->
-                                        val kodeProduk = itemPreview.kode
-                                        val item = items[kodeProduk]
-
-                                        if (item != null) {
-                                            // Kurangi stok lokal
-                                            item.stock_produk -= itemPreview.jumlah
-
-                                            // Update di Firestore
-                                            val itemRef = itemsCollection.document(kodeProduk)
-                                            try {
-                                                itemRef.update("stock_produk", item.stock_produk).await()
-                                                Log.d("kasieerrrrr", "Stock updated successfully for $kodeProduk")
-                                            } catch (e: Exception) {
-                                                Log.e("kasieerrrrr", "Error updating stock for $kodeProduk: ${e.message}", e)
-                                            }
-                                        } else {
-                                            Log.w("kasieerrrrr", "Item with kode $kodeProduk not found.")
+                                    previewMap.values.forEach { itemPreview ->
+                                        val kodeProduk = itemPreview.productId
+                                        Log.d("kasieerrrrr", "Kode Produk: $kodeProduk")
+                                        val count = itemPreview.count
+                                        val itemRef = itemsCollection.document(kodeProduk)
+                                        try {
+                                            itemRef
+                                                .update("stock", FieldValue.increment(-count.toLong()))
+                                                .await()
+                                            Toast.makeText(context, "Berhasil", Toast.LENGTH_SHORT).show()
+                                        } catch (e: Exception) {
+                                            Log.e("kasieerrrrr", "Error updating stock: ${e.message}")
                                         }
                                     }
+                                    previewMap.clear()
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(Yellow),
@@ -500,9 +530,3 @@ fun CashierPage() {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun CashierMenuPreview() {
-    CashierPage()
-}
