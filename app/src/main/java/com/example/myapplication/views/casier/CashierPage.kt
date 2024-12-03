@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -71,11 +72,14 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
     val previewMap = remember { mutableStateMapOf<String, PreviewProduct>() }
     var kodeBarang by remember { mutableStateOf("") }
     var isScanning by remember { mutableStateOf(false) }
+//    var isCheck by remember { mutableStateOf(false) }
     var scanResult by remember { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
     val itemsCollection = db.collection("users")
         .document(Firebase.auth.currentUser!!.uid)
         .collection("products")
+    var totalPrice = 0.0
+
     // Menggunakan LaunchedEffect untuk memuat data
     LaunchedEffect(Unit) {
         try {
@@ -98,10 +102,9 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
             .fillMaxSize()
             .padding(30.dp)
     ) {
-        Text(
-            text = "Cashie",
-            fontSize = 30.sp,
-            color = Logo,
+        Image(
+            painter = painterResource(R.drawable.cashie),
+            null
         )
         Spacer(modifier = Modifier.size(30.dp))
         TextField(
@@ -152,13 +155,6 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                 .fillMaxWidth()
                 .padding(0.dp, 18.dp)
         )
-        Image(
-            painter = painterResource(id = R.drawable.scan_img),
-            contentDescription = "scanner",
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentScale = ContentScale.FillWidth
-        )
 
         Button(
             contentPadding = PaddingValues(0.dp),
@@ -199,272 +195,191 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
             },
             colors = ButtonDefaults.buttonColors(Yellow),
             modifier = Modifier
-                .size(70.dp)
-                .clip(CircleShape)
+                .fillMaxWidth()
+                .height(70.dp)
+                .clip(RoundedCornerShape(0.dp))
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.casier),
-                contentDescription = "Scanner",
-                modifier = Modifier
-                    .fillMaxSize()
-                    ,
-                tint = Color.Black
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(
+                    "Scan Barcode",
+                    color = Color.Black,
+                    fontSize = 16.sp
+                )
+                Spacer(Modifier.size(15.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.casier),
+                    contentDescription = "Scanner",
+                    modifier = Modifier
+                        .size(35.dp),
+                    tint = Color.Black
+                )
+            }
         }
 
+        Spacer(Modifier.size(20.dp))
         Column(
             modifier = Modifier
-                .offset(y = -30.dp)
                 .fillMaxWidth()
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // Tombol di kiri
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.weight(1f)
+
+                Button(
+                    onClick = {
+//                            if (isCheck == false){
+//                                if (lastIndex >= 0) {
+//                                    val lastItem = previewList[lastIndex]
+//                                    previewList[lastIndex] = lastItem.copy(jumlah = lastItem.jumlah + 1)
+//                                    Log.d("Kasir2", previewList.toString())
+//                                    isCheck = true
+//                                }
+//                            }
+                    },
+                    colors = ButtonDefaults.buttonColors(Gray),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .size(35.dp) // Ukuran lingkaran
+                        .clip(CircleShape) // Membuat bentuk lingkaran
                 ) {
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .size(35.dp) // Ukuran lingkaran
-                            .clip(CircleShape) // Membuat bentuk lingkaran
-                    ) {
-                        Text(
-                            "x2",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .size(35.dp) // Ukuran lingkaran
-                            .clip(CircleShape) // Membuat bentuk lingkaran
-                    ) {
-                        Text(
-                            "x3",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .size(35.dp) // Ukuran lingkaran
-                            .clip(CircleShape) // Membuat bentuk lingkaran
-                    ) {
-                        Text(
-                            "x4",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
+                    Text(
+                        "x2",
+                        fontSize = 12.sp,
+                        color = Color.Black
+                    )
+                }
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(Gray),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .size(35.dp) // Ukuran lingkaran
+                        .clip(CircleShape) // Membuat bentuk lingkaran
+                ) {
+                    Text(
+                        "x3",
+                        fontSize = 12.sp,
+                        color = Color.Black
+                    )
+                }
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(Gray),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .size(35.dp) // Ukuran lingkaran
+                        .clip(CircleShape) // Membuat bentuk lingkaran
+                ) {
+                    Text(
+                        "x4",
+                        fontSize = 12.sp,
+                        color = Color.Black
+                    )
                 }
 
-                Spacer(Modifier.width(70.dp))
 
-                // Tombol di kanan
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.weight(1f)
+
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(Gray),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .size(35.dp) // Ukuran lingkaran
+                        .clip(CircleShape) // Membuat bentuk lingkaran
                 ) {
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .size(35.dp) // Ukuran lingkaran
-                            .clip(CircleShape) // Membuat bentuk lingkaran
-                    ) {
-                        Text(
-                            "x5",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .size(35.dp) // Ukuran lingkaran
-                            .clip(CircleShape) // Membuat bentuk lingkaran
-                    ) {
-                        Text(
-                            "x10",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .size(35.dp) // Ukuran lingkaran
-                            .clip(CircleShape) // Membuat bentuk lingkaran
-                    ) {
-                        Text(
-                            "xn",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
+                    Text(
+                        "x5",
+                        fontSize = 12.sp,
+                        color = Color.Black
+                    )
                 }
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(Gray),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .size(35.dp) // Ukuran lingkaran
+                        .clip(CircleShape) // Membuat bentuk lingkaran
+                ) {
+                    Text(
+                        "x10",
+                        fontSize = 12.sp,
+                        color = Color.Black
+                    )
+                }
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(Gray),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .size(35.dp) // Ukuran lingkaran
+                        .clip(CircleShape) // Membuat bentuk lingkaran
+                ) {
+                    Text(
+                        "x50",
+                        fontSize = 12.sp,
+                        color = Color.Black
+                    )
+                }
+
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(18.dp),
-                    modifier = Modifier
-                        .weight(1f)
-                ) {
-                    Text(
-                        "Quick scan",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight(700)
-                    )
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .height(50.dp) // Ukuran lingkaran
-                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                            .background(Gray)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            "Indomie goreng",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .height(50.dp) // Ukuran lingkaran
-                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                            .background(Gray)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            "Sabun",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .height(50.dp) // Ukuran lingkaran
-                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                            .background(Gray)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            "Beras",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .height(50.dp) // Ukuran lingkaran
-                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                            .background(Gray)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            "Bawang",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Gray),
-                        contentPadding = PaddingValues(0.dp),
-                        modifier = Modifier
-                            .height(50.dp) // Ukuran lingkaran
-                            .clip(RoundedCornerShape(10.dp, 0.dp, 0.dp, 10.dp))
-                            .background(Gray)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            "Indomie goreng",
-                            fontSize = 12.sp,
-                            color = Color.Black
-                        )
-                    }
-                }
 
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(18.dp)
+            ) {
+                Text(
+                    "Preview",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight(700)
+                )
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(18.dp),
                     modifier = Modifier
-                        .weight(2f)
+                        .background(
+                            color = Blue,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        .padding(horizontal = 20.dp, vertical = 14.dp)
+                        .fillMaxSize()
                 ) {
-                    Text(
-                        "Preview",
-                        fontWeight = FontWeight(700)
-                    )
-                    Box(
+                    Column(
                         modifier = Modifier
-                            .background(
-                                color = Blue,
-                                shape = RoundedCornerShape(0.dp, 10.dp, 10.dp, 0.dp)
-                            )
-                            .padding(14.dp)
-                            .fillMaxSize()
                     ) {
+                        // Add your table here
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                "Nama",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight(700)
+                            )
+                            Text(
+                                "Jumlah",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight(700)
+                            )
+                            Text(
+                                "Harga",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight(700)
+                            )
+                        }
+                        Spacer(Modifier.size(8.dp))
+
                         Column(
                             modifier = Modifier
-                                .fillMaxSize()
                                 .verticalScroll(rememberScrollState())
                         ) {
-                            // Add your table here
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(
-                                    "Nama",
-                                    fontSize = 10.sp,
-                                    fontWeight = FontWeight(700)
-                                )
-                                Text(
-                                    "Jumlah",
-                                    fontSize = 10.sp,
-                                    fontWeight = FontWeight(700)
-                                )
-                                Text(
-                                    "Harga",
-                                    fontSize = 10.sp,
-                                    fontWeight = FontWeight(700)
-                                )
-                            }
-                            Spacer(Modifier.size(8.dp))
                             previewMap.values.forEach { map ->
                                 Log.d("kasieerrrrr", map.toString())
+                                totalPrice += map.price
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween
@@ -472,29 +387,46 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                                     // Safe access and proper casting
                                     Text(
                                         text = map.name, // Default to "Unknown" if null
-                                        fontSize = 9.sp,
+                                        fontSize = 11.sp,
                                     )
                                     Text(
                                         text = map.count.toString(), // Convert Int to String
-                                        fontSize = 9.sp
+                                        fontSize = 11.sp
                                     )
                                     Text(
                                         text = map.price.toString(), // Convert Int to String
-                                        fontSize = 9.sp
+                                        fontSize = 11.sp
                                     )
                                 }
                             }
                         }
+                    }
 
-                        val coroutineScope = rememberCoroutineScope()
+                    val coroutineScope = rememberCoroutineScope()
+                    val context = LocalContext.current
 
-                        val context = LocalContext.current
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        verticalArrangement = Arrangement.Bottom,
+                        modifier = Modifier
+
+                            .fillMaxSize()
+                            .height(50.dp)
+
+                    ){
+                        Text(
+                            "Total: $totalPrice",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight(700)
+                        )
+                        Spacer(Modifier.size(10.dp))
+
+
                         Button(
                             onClick = {
                                 coroutineScope.launch {
                                     previewMap.values.forEach { itemPreview ->
                                         val kodeProduk = itemPreview.productId
-                                        Log.d("kasieerrrrr", "Kode Produk: $kodeProduk")
                                         val count = itemPreview.count
                                         val itemRef = itemsCollection.document(kodeProduk)
                                         try {
@@ -503,7 +435,6 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                                                 .await()
                                             Toast.makeText(context, "Berhasil", Toast.LENGTH_SHORT).show()
                                         } catch (e: Exception) {
-                                            Log.e("kasieerrrrr", "Error updating stock: ${e.message}")
                                         }
                                     }
                                     previewMap.clear()
@@ -513,14 +444,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                             contentPadding = PaddingValues(0.dp),
                             modifier = Modifier
                                 .width(70.dp)
-                                .height(20.dp)
+                                .height(25.dp)
                                 .clip(RoundedCornerShape(10.dp)) // Membuat bentuk lingkaran
-                                .align(Alignment.BottomEnd)
                         ) {
                             Text(
                                 "Next",
                                 color = Color.Black,
-                                fontSize = 10.sp
+                                fontSize = 13.sp
                             )
                         }
                     }
@@ -529,4 +459,3 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
         }
     }
 }
-

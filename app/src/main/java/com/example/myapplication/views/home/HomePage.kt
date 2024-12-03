@@ -15,8 +15,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -60,6 +62,7 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
         modifier = Modifier
             .fillMaxSize()
             .background(Blue)
+        .verticalScroll(rememberScrollState())
     ) {
         // Header
         Box(
@@ -161,47 +164,47 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
             }
         }
 
-            // Konten HomePage
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.White, shape = RoundedCornerShape(40.dp,40.dp,0.dp,0.dp))
-                    .padding(vertical = 56.dp, horizontal = 30.dp)
+        // Konten HomePage
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.White, shape = RoundedCornerShape(40.dp,40.dp,0.dp,0.dp))
+                .padding(vertical = 56.dp, horizontal = 30.dp)
 
-            ) {
-                CustomBox(
-                    title = "Cashier",
-                    subtitle = "Let's Get Started! Begin a New Transaction",
-                    imageRes = R.drawable.group,
-                    onClick = { navController.navigate(BottomBarScreen.Cashier.route) },
-                )
+        ) {
+            CustomBox(
+                title = "Cashier",
+                subtitle = "Let's Get Started! Begin a New Transaction",
+                imageRes = R.drawable.group,
+                onClick = { navController.navigate(BottomBarScreen.Cashier.route) },
+            )
 
-                Spacer(modifier = Modifier.height(49.dp))
+            Spacer(modifier = Modifier.height(49.dp))
 
-                Image(
-                    painter = painterResource(R.drawable.line_home),
-                    contentDescription = "tes"
-                )
+            Image(
+                painter = painterResource(R.drawable.line_home),
+                contentDescription = "tes"
+            )
 
-                Spacer(modifier = Modifier.height(49.dp))
+            Spacer(modifier = Modifier.height(49.dp))
 
-                CustomBox(
-                    title = "Database",
-                    subtitle = "",
-                    imageRes = R.drawable.database_img,
-                    onClick = { navController.navigate(BottomBarScreen.Databases.route) }
-                )
+            CustomBox(
+                title = "Database",
+                subtitle = "",
+                imageRes = R.drawable.database_img,
+                onClick = { navController.navigate(BottomBarScreen.Databases.route) }
+            )
 
-                Spacer(modifier = Modifier.height(35.dp))
+            Spacer(modifier = Modifier.height(35.dp))
 
-                CustomBox(
-                    title = "Sales History",
-                    subtitle = "15/02/2024",
-                    imageRes = R.drawable.history_image,
-                    onClick = { navController.navigate(BottomBarScreen.History.route) }
-                )
-            }
+            CustomBox(
+                title = "Sales History",
+                subtitle = "15/02/2024",
+                imageRes = R.drawable.history_image,
+                onClick = { navController.navigate(BottomBarScreen.History.route) }
+            )
         }
+    }
 }
 
 @Composable
@@ -251,4 +254,3 @@ fun CustomBox(title: String, subtitle: String, imageRes: Int, onClick: () -> Uni
         }
     }
 }
-
