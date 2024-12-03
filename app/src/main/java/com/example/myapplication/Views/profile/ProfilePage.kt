@@ -98,16 +98,5 @@ fun ProfilePage(user: User, navController: NavController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Tombol Edit
-        Button(
-            onClick = { navController.navigate("register") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            shape = MaterialTheme.shapes.medium,
-            colors = ButtonDefaults.buttonColors(Color(0xFFFDDE55))
-        ) {
-            Text(text = "Edit", fontSize = 16.sp, color = Color.Black, fontWeight = FontWeight.Bold)
-        }
     }
 }

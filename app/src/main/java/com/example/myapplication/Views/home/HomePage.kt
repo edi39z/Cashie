@@ -35,19 +35,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.navbar.BottomBarScreen
 import com.example.myapplication.ui.theme.Blue
 import com.example.myapplication.views.auth.`fun`.AuthManager
 import com.example.myapplication.views.profile.ProfileViewModel
+import com.google.firebase.auth.auth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 @Composable
-fun HomePage(navMainController: NavController, profileViewModel: ProfileViewModel) {
+fun HomePage(navMainController: NavController, profileViewModel: ProfileViewModel,navController: NavController) {
     // Mendapatkan data pengguna dari StateFlow
     val userState = profileViewModel.user.collectAsState(initial = null)
     val user = userState.value
+    val photoProfile = Firebase.auth.currentUser?.photoUrl.toString()
+    Log.d("HomePage", photoProfile)
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,14 +69,15 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
                 .padding(horizontal = 40.dp, vertical = 21.dp)
         ) {
             // Foto Profil
-            if (user?.photoUrl.isNullOrEmpty().not()) {
-                Image(
-                    painter = rememberAsyncImagePainter(user?.photoUrl),
+            if (photoProfile.isNotEmpty()) {
+                AsyncImage(
+                    model = photoProfile,
                     contentDescription = "Foto Profil",
                     modifier = Modifier
                         .size(52.dp)
                         .background(Color.Gray, CircleShape)
                         .align(Alignment.CenterStart)
+                        .clip(CircleShape),
                 )
             } else {
                 // Placeholder jika tidak ada foto
@@ -166,7 +173,7 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
                     title = "Cashier",
                     subtitle = "Let's Get Started! Begin a New Transaction",
                     imageRes = R.drawable.group,
-                    onClick = { navMainController.navigate(BottomBarScreen.Cashier.route) },
+                    onClick = { navController.navigate(BottomBarScreen.Cashier.route) },
                 )
 
                 Spacer(modifier = Modifier.height(49.dp))
@@ -182,7 +189,7 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
                     title = "Database",
                     subtitle = "",
                     imageRes = R.drawable.database_img,
-                    onClick = { navMainController.navigate(BottomBarScreen.Databases.route) }
+                    onClick = { navController.navigate(BottomBarScreen.Databases.route) }
                 )
 
                 Spacer(modifier = Modifier.height(35.dp))
@@ -191,7 +198,7 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
                     title = "Sales History",
                     subtitle = "15/02/2024",
                     imageRes = R.drawable.history_image,
-                    onClick = { navMainController.navigate(BottomBarScreen.History.route) }
+                    onClick = { navController.navigate(BottomBarScreen.History.route) }
                 )
             }
         }

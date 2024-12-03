@@ -33,6 +33,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -52,6 +53,12 @@ import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Background
 import com.example.myapplication.ui.theme.button
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 @Composable
 
@@ -158,7 +165,8 @@ fun LoginPage(
                         .fillMaxWidth()
                         .height(50.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF03AED2)),
-                    shape = RoundedCornerShape(16.dp)                ) {
+                    shape = RoundedCornerShape(16.dp)
+                ) {
                     Text(
                         text = "Login",
                         color = Color.White ,
@@ -188,10 +196,25 @@ fun LoginPage(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
+                val scope = rememberCoroutineScope()
                 OutlinedButton(
                     onClick = {
                         viewModel.signInWithGoogle {
-                            navController.navigate("home")
+                            scope.launch {
+                                val userExists = Firebase.firestore.collection("users")
+                                    .document(Firebase.auth.currentUser!!.uid).get().await()
+                                    .exists()
+                                if (userExists){
+                                navController.navigate("home"){
+                                    popUpTo("login"){
+                                        inclusive = true
+                                    }
+                                }
+
+                                } else {
+                                    navController.navigate("register")
+                                }
+                            }
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
