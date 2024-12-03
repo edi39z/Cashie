@@ -8,7 +8,7 @@
     import androidx.compose.foundation.layout.padding
     import androidx.compose.material3.Scaffold
     import androidx.compose.ui.Modifier
-    import com.example.myapplication.`fun`.Navigation
+    import com.example.myapplication.function.Navigation
     import com.example.myapplication.ui.theme.MyApplicationTheme
     import com.example.myapplication.views.auth.`fun`.AuthManager
 
@@ -20,6 +20,7 @@
             val authManager = AuthManager(this)
             setContent {
                 MyApplicationTheme {
+
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                         Navigation(
                             modifier = Modifier.padding(innerPadding),

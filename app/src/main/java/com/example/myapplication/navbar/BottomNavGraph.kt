@@ -97,7 +97,7 @@ fun BottomNavGraph(navHostController: NavController, appContext: Context) {
                     HistoryPage()
                 }
                 composable(route = BottomBarScreen.Profiel.route) {
-                    ProfilePageWithViewModel(profileViewModel, navController)
+                    ProfilePageWithViewModel(profileViewModel, navHostController)
                 }
             }
         }
