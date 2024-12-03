@@ -5,34 +5,35 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,43 +43,56 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapplication.R
+import com.example.myapplication.navbar.BottomBarScreen
 import com.example.myapplication.product.PreviewProduct
 import com.example.myapplication.product.Product
+import com.example.myapplication.product.Receipt
 import com.example.myapplication.ui.theme.Blue
 import com.example.myapplication.ui.theme.Gray
-import com.example.myapplication.ui.theme.Logo
 import com.example.myapplication.ui.theme.Yellow
 import com.example.myapplication.views.casier.`fun`.BarcodeScanner
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
 
 @Composable
-fun CashierPage(barcodeScanner: BarcodeScanner) {
+fun CashierPage(barcodeScanner: BarcodeScanner,navController: NavController) {
 
     val db = Firebase.firestore
     val items by remember { mutableStateOf(mutableMapOf<String, Product>()) }
     val previewMap = remember { mutableStateMapOf<String, PreviewProduct>() }
     var kodeBarang by remember { mutableStateOf("") }
+    var showPaymentDialog by remember { mutableStateOf(false) }
+    var paymentAmount by remember { mutableStateOf("") }
     var isScanning by remember { mutableStateOf(false) }
 //    var isCheck by remember { mutableStateOf(false) }
     var scanResult by remember { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
-    val itemsCollection = db.collection("users")
+    val userDoc = db
+        .collection("users")
         .document(Firebase.auth.currentUser!!.uid)
+
+    val itemsCollection = userDoc
         .collection("products")
     var totalPrice = 0.0
+    val payment by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
 
     // Menggunakan LaunchedEffect untuk memuat data
     LaunchedEffect(Unit) {
@@ -104,7 +118,10 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
     ) {
         Image(
             painter = painterResource(R.drawable.cashie),
-            null
+            contentDescription = null,
+            modifier = Modifier
+                .width(70.dp)
+
         )
         Spacer(modifier = Modifier.size(30.dp))
         TextField(
@@ -201,7 +218,7 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Text(
                     "Scan Barcode",
                     color = Color.Black,
@@ -378,13 +395,11 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                                 .verticalScroll(rememberScrollState())
                         ) {
                             previewMap.values.forEach { map ->
-                                Log.d("kasieerrrrr", map.toString())
                                 totalPrice += map.price
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    // Safe access and proper casting
                                     Text(
                                         text = map.name, // Default to "Unknown" if null
                                         fontSize = 11.sp,
@@ -402,8 +417,6 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                         }
                     }
 
-                    val coroutineScope = rememberCoroutineScope()
-                    val context = LocalContext.current
 
                     Column(
                         horizontalAlignment = Alignment.End,
@@ -413,7 +426,7 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                             .fillMaxSize()
                             .height(50.dp)
 
-                    ){
+                    ) {
                         Text(
                             "Total: $totalPrice",
                             fontSize = 15.sp,
@@ -423,29 +436,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
 
 
                         Button(
-                            onClick = {
-                                coroutineScope.launch {
-                                    previewMap.values.forEach { itemPreview ->
-                                        val kodeProduk = itemPreview.productId
-                                        val count = itemPreview.count
-                                        val itemRef = itemsCollection.document(kodeProduk)
-                                        try {
-                                            itemRef
-                                                .update("stock", FieldValue.increment(-count.toLong()))
-                                                .await()
-                                            Toast.makeText(context, "Berhasil", Toast.LENGTH_SHORT).show()
-                                        } catch (e: Exception) {
-                                        }
-                                    }
-                                    previewMap.clear()
-                                }
-                            },
+                            onClick = { showPaymentDialog = true },
                             colors = ButtonDefaults.buttonColors(Yellow),
                             contentPadding = PaddingValues(0.dp),
                             modifier = Modifier
                                 .width(70.dp)
                                 .height(25.dp)
-                                .clip(RoundedCornerShape(10.dp)) // Membuat bentuk lingkaran
+                                .clip(RoundedCornerShape(10.dp))
                         ) {
                             Text(
                                 "Next",
@@ -453,6 +450,114 @@ fun CashierPage(barcodeScanner: BarcodeScanner) {
                                 fontSize = 13.sp
                             )
                         }
+
+
+                    }
+                    if (showPaymentDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showPaymentDialog = false },
+                            title = {
+                                Text("Pembayaran", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            },
+                            text = {
+                                Column {
+                                    Text("Total harga: Rp$totalPrice")
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    OutlinedTextField(
+                                        value = paymentAmount,
+                                        onValueChange = { paymentAmount = it },
+                                        label = { Text("Jumlah Bayar") },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                                    )
+                                }
+                            },
+                            confirmButton = {
+                                Button(
+                                    onClick = {
+                                        val payment = paymentAmount.toDoubleOrNull()
+                                        if (payment != null) {
+                                            if (payment >= totalPrice.toDouble()) {
+                                                coroutineScope.launch {
+                                                    try {
+                                                        // Update stok di Firestore
+                                                        previewMap.values.forEach { itemPreview ->
+                                                            val kodeProduk = itemPreview.productId
+                                                            val count = itemPreview.count
+                                                            val itemRef = itemsCollection.document(kodeProduk)
+                                                            itemRef.update(
+                                                                "stock",
+                                                                FieldValue.increment(-count.toLong())
+                                                            ).await()
+                                                        }
+
+                                                        // Hitung kembalian
+                                                        val changes = payment - totalPrice
+
+                                                        val receiptDoc = userDoc.collection("receipts").document()
+                                                        val receiptId = receiptDoc.id
+                                                        receiptDoc
+                                                            .set(
+                                                                Receipt(
+                                                                    id = receiptId,
+                                                                    items = previewMap.values.toList(),
+                                                                    totalPrice = totalPrice,
+                                                                    changes = changes,
+                                                                    payment = payment,
+                                                                    timestamp = Timestamp.now()
+                                                                )
+                                                            )
+                                                            .await()
+
+                                                        // Tampilkan pesan sukses
+                                                        Toast.makeText(
+                                                            context,
+                                                            "Pembayaran berhasil!",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+
+                                                        // Navigasi ke HistoryPage
+                                                        navController.navigate(BottomBarScreen.History.route)
+                                                        showPaymentDialog = false // Tutup dialog
+                                                    } catch (e: Exception) {
+                                                        Log.e("PaymentError", "Gagal melakukan pembayaran", e)
+                                                        Toast.makeText(
+                                                            context,
+                                                            "Terjadi kesalahan saat pembayaran",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    }
+                                                }
+                                            } else {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Pembayaran tidak cukup!",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        } else {
+                                            Toast.makeText(
+                                                context,
+                                                "Masukkan jumlah yang valid!",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    },
+                                    colors = ButtonDefaults.buttonColors(Yellow)
+                                ) {
+                                    Text("OK", color = Color.Black)
+                                }
+
+                            },
+                            dismissButton = {
+                                Button(
+                                    onClick = { showPaymentDialog = false },
+                                    colors = ButtonDefaults.buttonColors(Color.Gray)
+                                ) {
+                                    Text("Batal", color = Color.Black)
+                                }
+                            }
+                        )
                     }
                 }
             }

@@ -62,14 +62,13 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
         modifier = Modifier
             .fillMaxSize()
             .background(Blue)
-        .verticalScroll(rememberScrollState())
     ) {
         // Header
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.White)
-                .padding(horizontal = 40.dp, vertical = 21.dp)
+                .padding(horizontal = 40.dp, vertical = 16.dp)
         ) {
             // Foto Profil
             if (photoProfile.isNotEmpty()) {
@@ -127,7 +126,8 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 41.dp, vertical = 31.dp)
+                .padding(horizontal = 41.dp, vertical = 16.dp)
+
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 // Nama pengguna dan nama toko
@@ -143,7 +143,7 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
                         }
                         withStyle(
                             style = SpanStyle(
-                                fontSize = 27.sp,
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight(700)
                             )
                         ) {
@@ -169,7 +169,9 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = Color.White, shape = RoundedCornerShape(40.dp,40.dp,0.dp,0.dp))
-                .padding(vertical = 56.dp, horizontal = 30.dp)
+                .padding(vertical = 46.dp, horizontal = 30.dp)
+                .verticalScroll(rememberScrollState())
+
 
         ) {
             CustomBox(
@@ -179,14 +181,8 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
                 onClick = { navController.navigate(BottomBarScreen.Cashier.route) },
             )
 
-            Spacer(modifier = Modifier.height(49.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            Image(
-                painter = painterResource(R.drawable.line_home),
-                contentDescription = "tes"
-            )
-
-            Spacer(modifier = Modifier.height(49.dp))
 
             CustomBox(
                 title = "Database",
@@ -195,7 +191,7 @@ fun HomePage(navMainController: NavController, profileViewModel: ProfileViewMode
                 onClick = { navController.navigate(BottomBarScreen.Databases.route) }
             )
 
-            Spacer(modifier = Modifier.height(35.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             CustomBox(
                 title = "Sales History",

@@ -17,7 +17,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.product.ProductViewModel
 import com.example.myapplication.views.casier.CashierPage
-import com.example.myapplication.views.casier.ScannerScreen
 import com.example.myapplication.views.casier.`fun`.BarcodeScanner
 import com.example.myapplication.views.database.AddProductPage
 import com.example.myapplication.views.database.DataPage
@@ -32,7 +31,7 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun BottomNavGraph(navHostController: NavController, appContext: Context) {
     val navController = rememberNavController()
-    val barcodeScanner = remember { com.example.myapplication.views.casier.`fun`.BarcodeScanner(appContext = appContext) }
+    val barcodeScanner = remember { BarcodeScanner(appContext = appContext) }
     val productViewModel = remember { ProductViewModel() }
     val profileViewModel = remember { ProfileViewModel() } // Tambahkan ViewModel di sini
 
@@ -91,7 +90,7 @@ fun BottomNavGraph(navHostController: NavController, appContext: Context) {
 
 
                 composable(route = BottomBarScreen.Cashier.route) {
-                CashierPage( barcodeScanner = barcodeScanner)
+                CashierPage( barcodeScanner = barcodeScanner, navController = navController)
                 }
                 composable(route = BottomBarScreen.History.route) {
                     HistoryPage()
