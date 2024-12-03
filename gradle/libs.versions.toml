@@ -1,6 +1,7 @@
 [versions]
 activityComposeVersion = "1.9.3"
 agp = "8.6.0"
+androidxMaterial = "<latest-version>"
 barcodeScanning = "17.3.0"
 coil = "2.4.0"
 coilKtCoilCompose = "2.4.0"
@@ -20,6 +21,7 @@ activity = "1.9.2"
 constraintlayout = "2.1.4"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
+material3 = "<latest-version>"
 navigationFragmentKtx = "2.8.3"
 navigationUiKtx = "2.8.3"
 dotsindicator = "4.2"
@@ -36,11 +38,15 @@ navigationCompose = "2.8.4"
 googleid = "1.1.1"
 firebaseFirestoreKtx = "25.1.1"
 playServicesMlkitBarcodeScanning = "18.3.1"
+uiVersion = "<latest-version>"
 
 
 [libraries]
 androidx-activity-compose-v193 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
 androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive" }
+androidx-compose-material-material2 = { module = "androidx.compose.material:material", version.ref = "androidxMaterial" }
+androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-compose-ui-ui2 = { module = "androidx.compose.ui:ui", version.ref = "uiVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
