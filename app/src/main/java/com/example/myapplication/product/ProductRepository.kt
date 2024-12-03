@@ -44,7 +44,7 @@ class ProductRepository {
     suspend fun addProduct(product: Product) {
         try {
             val collection = getUserProductsCollection() ?: return
-            collection.document(product.id_produk).set(product).await()
+            collection.document(product.id).set(product).await()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -54,7 +54,7 @@ class ProductRepository {
     suspend fun updateProduct(product: Product) {
         try {
             val collection = getUserProductsCollection() ?: return
-            collection.document(product.id_produk).set(product).await()
+            collection.document(product.id).set(product).await()
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -16,9 +16,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.product.ProductViewModel
+import com.example.myapplication.views.casier.CashierPage
 import com.example.myapplication.views.casier.ScannerScreen
 import com.example.myapplication.views.casier.`fun`.BarcodeScanner
-import com.example.myapplication.views.casier.kasir
 import com.example.myapplication.views.database.AddProductPage
 import com.example.myapplication.views.database.DataPage
 import com.example.myapplication.views.database.EditProductPage
@@ -91,7 +91,7 @@ fun BottomNavGraph(navHostController: NavController, appContext: Context) {
 
 
                 composable(route = BottomBarScreen.Cashier.route) {
-                ScannerScreen( barcodeScanner, navController)
+                CashierPage( barcodeScanner = barcodeScanner)
                 }
                 composable(route = BottomBarScreen.History.route) {
                     HistoryPage()
