@@ -74,7 +74,7 @@ fun BottomBar(navController: NavHostController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(74.dp) // Tinggi navbar tanpa floating
+                .height(80.dp) // Tinggi navbar tanpa floating
                 .shadow(6.dp, shape = RoundedCornerShape(2.dp)) // Shadow lebih nampak
                 .background(colorResource(id = R.color.navbar)),
             horizontalArrangement = Arrangement.SpaceAround,
