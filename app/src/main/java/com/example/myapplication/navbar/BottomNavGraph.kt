@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.product.ProductViewModel
 import com.example.myapplication.views.casier.ScannerScreen
+import com.example.myapplication.views.casier.`fun`.BarcodeScanner
 import com.example.myapplication.views.casier.kasir
 import com.example.myapplication.views.database.AddProductPage
 import com.example.myapplication.views.database.DataPage
@@ -59,16 +60,21 @@ fun BottomNavGraph(navHostController: NavController, appContext: Context) {
                     DataPage(navController = navController, productViewModel = productViewModel)
                 }
                 composable("AddProductScreen") {
-                    AddProductPage { product ->
-                        val userId = FirebaseAuth.getInstance().currentUser?.uid
-                        if (userId != null) {
-                            productViewModel.addProduct(userId, product,context = appContext)
-                            navController.popBackStack() // Kembali ke halaman sebelumnya
-                        } else {
+                    val barcodeScanner = remember { BarcodeScanner(appContext) } // Inisialisasi scanner
+                    AddProductPage(
+                        barcodeScanner = barcodeScanner, // Berikan scanner sebagai parameter
+                        onProductAdded = { product ->
+                            val userId = FirebaseAuth.getInstance().currentUser?.uid
+                            if (userId != null) {
+                                productViewModel.addProduct(userId, product, context = appContext)
+                                navController.popBackStack() // Kembali ke halaman sebelumnya
+                            } else {
                                 Log.e("AddProduct", "User ID tidak ditemukan")
+                            }
                         }
-                    }
+                    )
                 }
+
 
                 composable("EditProductScreen/{productId}") { backStackEntry ->
                     val productId = backStackEntry.arguments?.getString("productId") ?: ""
@@ -85,7 +91,7 @@ fun BottomNavGraph(navHostController: NavController, appContext: Context) {
 
 
                 composable(route = BottomBarScreen.Cashier.route) {
-                kasir()
+                ScannerScreen( barcodeScanner, navController)
                 }
                 composable(route = BottomBarScreen.History.route) {
                     HistoryPage()
