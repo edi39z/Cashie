@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -26,37 +28,35 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.product.Product
 import com.example.myapplication.ui.theme.Blue
 import com.example.myapplication.ui.theme.Gray
+import com.example.myapplication.ui.theme.Yellow
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-
-data class Produk(
-    val id_produk : String = "",
-    val nama_produk : String = "",
-    val stock_produk : Int = 0,
-    val harga_produk : Int = 0
-)
 
 data class PreviewProduk(
     val kode: String,
     val nama: String,
-    val jumlah: Int,
-    val harga: Double
+    var jumlah: Int,
+    var harga: Double
 )
 
 
@@ -84,42 +84,54 @@ fun Kasir(){
         }
     }
 
-    val previewList by remember {
-        mutableStateOf(
-            mutableListOf<PreviewProduk>()
-        )
-    }
+//    val previewList by remember {
+//        mutableStateOf(
+//            mutableListOf<PreviewProduk>()
+//        )
+//    }
+
+    val previewList = remember { mutableStateListOf<PreviewProduk>() }
+
 
     var kodeBarang by remember { mutableStateOf("") }
-    var isCheck by remember { mutableStateOf(true) }
-
+    var isCheck by remember { mutableStateOf(false) }
 
     Column {
         TextField(
             value = kodeBarang,
             onValueChange = { input ->
                 kodeBarang = input // Update kodeBarang dengan nilai baru dari pengguna
-                Log.d("KasirView", kodeBarang)
-                val foundItem = items[kodeBarang]
-                Log.d("KasirView", foundItem.toString())
-
-                // Jika ditemukan, lakukan sesuatu
-                foundItem?.let {
-                    Log.d("KasirView","Let: ${it.nama_produk}")
-                    previewList.add(
-                        PreviewProduk(
-                            kode = it.id_produk,
-                            nama = it.nama_produk,
-                            jumlah = 1,
-                            harga = it.harga_produk.toDouble()
-                        )
-                    )
-                }
-
             },
             trailingIcon = {
                 IconButton(
                     onClick = {
+                        Log.d("Kasir2", "Kode Barang: $kodeBarang")
+                        val foundItem = items[kodeBarang]
+                        Log.d("Kasir2", "Found Item: $foundItem")
+                        val checkPreviewList = previewList.find { it.kode == kodeBarang }
+                        Log.d("KasirView", foundItem.toString())
+
+                        foundItem?.let {
+                            Log.d("Kasir2", "Let: ${it.nama_produk}")
+                            if (checkPreviewList == null) {
+                                // Tambahkan item baru jika tidak ada di previewList
+                                previewList.add(
+                                    PreviewProduk(
+                                        kode = it.id_produk,
+                                        nama = it.nama_produk,
+                                        jumlah = 1,
+                                        harga = it.harga_produk.toDouble()
+                                    )
+                                )
+                            } else {
+                                // Cari index elemen di previewList dan update jumlahnya
+                                val index = previewList.indexOf(checkPreviewList)
+                                if (index >= 0) {
+                                    previewList[index] = checkPreviewList.copy(jumlah = checkPreviewList.jumlah + 1)
+                                }
+                            }
+                        }
+
                     }
                 ) {
                     Icon(
@@ -144,8 +156,11 @@ fun Kasir(){
                 Button(
                     onClick = {
                         if (isCheck == false){
-//                            previewList[0]["jumlah"] = (previewList[0]["jumlah"] as Int)*2
-                            isCheck = true
+                            previewList.lastOrNull()?.let {
+                                it.jumlah++
+                                Log.d("Kasir2", previewList.toString())
+                                isCheck = true
+                            }
                         }
                     },
                     colors = ButtonDefaults.buttonColors(Gray),
@@ -162,6 +177,13 @@ fun Kasir(){
                 }
                 Button(
                     onClick = {
+                        if (isCheck == false){
+                            previewList.lastOrNull()?.let {
+                                it.jumlah += 2
+                                Log.d("Kasir2", previewList.toString())
+                                isCheck = true
+                            }
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(Gray),
                     contentPadding = PaddingValues(0.dp),
@@ -177,6 +199,13 @@ fun Kasir(){
                 }
                 Button(
                     onClick = {
+                        if (isCheck == false){
+                            previewList.lastOrNull()?.let {
+                                it.jumlah += 3
+                                Log.d("Kasir2", previewList.toString())
+                                isCheck = true
+                            }
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(Gray),
                     contentPadding = PaddingValues(0.dp),
@@ -255,26 +284,48 @@ fun Kasir(){
                     }
 
                 }
-//                Button(
-//                    onClick = {
-//                        previewList.forEach { map ->
-//                            item[0]["stok"] = (item[0]["stok"] as Int) - (map["jumlah"] as Int)
-//                        }
-//                    },
-//                    colors = ButtonDefaults.buttonColors(Yellow),
-//                    contentPadding = PaddingValues(0.dp),
-//                    modifier = Modifier
-//                        .width(70.dp)
-//                        .height(20.dp)
-//                        .clip(RoundedCornerShape(10.dp)) // Membuat bentuk lingkaran
-//                        .align(Alignment.BottomEnd)
-//                ) {
-//                    Text(
-//                        "Next  ${item[0]["stok"]}",
-//                        color = Color.Black,
-//                        fontSize = 10.sp
-//                    )
-//                }
+
+                val coroutineScope = rememberCoroutineScope()
+
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            previewList.forEach { itemPreview ->
+                                val kodeProduk = itemPreview.kode
+                                val item = items[kodeProduk]
+
+                                if (item != null) {
+                                    // Kurangi stok lokal
+                                    item.stock_produk -= itemPreview.jumlah
+
+                                    // Update di Firestore
+                                    val itemRef = itemsCollection.document(kodeProduk)
+                                    try {
+                                        itemRef.update("stock_produk", item.stock_produk).await()
+                                        Log.d("Kasir2", "Stock updated successfully for $kodeProduk")
+                                    } catch (e: Exception) {
+                                        Log.e("Kasir2", "Error updating stock for $kodeProduk: ${e.message}", e)
+                                    }
+                                } else {
+                                    Log.w("Kasir2", "Item with kode $kodeProduk not found.")
+                                }
+                            }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(Yellow),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .width(70.dp)
+                        .height(20.dp)
+                        .clip(RoundedCornerShape(10.dp)) // Membuat bentuk lingkaran
+                        .align(Alignment.BottomEnd)
+                ) {
+                    Text(
+                        "Next",
+                        color = Color.Black,
+                        fontSize = 10.sp
+                    )
+                }
             }
         }
     }
