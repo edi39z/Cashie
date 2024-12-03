@@ -16,6 +16,9 @@ class RegisterViewModel : ViewModel() {
     private val _username = MutableStateFlow("")
     val username: StateFlow<String> get() = _username
 
+    private val _toko = MutableStateFlow("")
+    val toko: StateFlow<String> get() = _toko
+
     private val _dateOfBirth = MutableStateFlow("")
     val dateOfBirth: StateFlow<String> get() = _dateOfBirth
 
@@ -42,6 +45,9 @@ class RegisterViewModel : ViewModel() {
 
     fun updateUsername(newUsername: String) {
         _username.value = newUsername
+    }
+    fun updateToko(newToko: String) {
+        _toko .value = newToko
     }
 
     fun updateDateOfBirth(newDateOfBirth: String) {

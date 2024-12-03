@@ -51,8 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Background
-import com.example.myapplication.ui.theme.textLogo
-import com.example.myapplication.ui.theme.textbutton
+import com.example.myapplication.ui.theme.button
 
 @Composable
 
@@ -75,24 +74,8 @@ fun LoginPage(
         Image(
             painter = painterResource(id = R.drawable.cashie),
             contentDescription = "App Logo",
-            modifier = Modifier.size(120.dp)
+            modifier = Modifier.size(160.dp)
         )
-
-        Text(
-            text = stringResource(R.string.app_name),
-            fontSize = 28.sp,
-            fontFamily = FontFamily.Cursive,
-            fontWeight = FontWeight.Black,
-            color = textLogo,
-            style = TextStyle(
-                shadow = Shadow(
-                    color = textLogo,
-                    offset = Offset(2f, 2f),
-
-                    )
-            )
-        )
-
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -124,8 +107,7 @@ fun LoginPage(
                 OutlinedTextField(
                     value = email,
                     onValueChange = { viewModel.updateEmail(it)},
-                    label = { Text("Username ID", color = Color.Gray,fontSize = 13.sp) },
-                    placeholder = { Text("Enter your username") },
+                    label = { Text("Username", color = Color.Gray,fontSize = 13.sp) },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Email,
@@ -133,7 +115,7 @@ fun LoginPage(
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(50)
+                    shape = RoundedCornerShape(16.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -143,7 +125,6 @@ fun LoginPage(
                     value = password,
                     onValueChange = { viewModel.updatePassword(it)},
                     label = { Text("Password", color = Color.Gray,fontSize = 13.sp) },
-                    placeholder = { Text("Password") },
                     leadingIcon = {
                         Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock Icon")
                     },
@@ -157,7 +138,7 @@ fun LoginPage(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                    shape = RoundedCornerShape(50)
+                    shape = RoundedCornerShape(16.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 //reset password
@@ -172,13 +153,12 @@ fun LoginPage(
                             navController.navigate("home")
                         }
                     },
-//                    enabled = authState.value != AuthState.Loading,
+
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A5D44)),
-                    shape = RoundedCornerShape(50)
-                ) {
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF03AED2)),
+                    shape = RoundedCornerShape(16.dp)                ) {
                     Text(
                         text = "Login",
                         color = Color.White ,
@@ -215,6 +195,7 @@ fun LoginPage(
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)
                 ) {
                     Row(
@@ -245,7 +226,7 @@ fun LoginPage(
                         onClick = { navController.navigate("signup") },
                         contentPadding = PaddingValues(0.dp)
                     ) {
-                        Text(text = "Sign Up", fontSize = 13.sp ,color = (textbutton), fontWeight = FontWeight.Bold)
+                        Text(text = "Sign Up", fontSize = 13.sp ,color = (button), fontWeight = FontWeight.Bold)
                     }
                 }
             }

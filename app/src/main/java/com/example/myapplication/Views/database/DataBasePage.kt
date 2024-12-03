@@ -25,12 +25,12 @@ import com.example.myapplication.product.ProductViewModel
 @Composable
 fun DataPage(navController: NavController, productViewModel: ProductViewModel) {
     val products by productViewModel.products.collectAsState()
+    var showDeleteConfirmationDialog by remember { mutableStateOf(false) }
+    var productToDelete by remember { mutableStateOf<Product?>(null) }
 
     LaunchedEffect(Unit) {
-        productViewModel.fetchProducts()
-        Log.d("DataPage", "Products fetched: ${products.size}")
+        productViewModel.listenToProducts()
     }
-
 
     Column(
         modifier = Modifier
@@ -41,11 +41,12 @@ fun DataPage(navController: NavController, productViewModel: ProductViewModel) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFE0F7FA)),
+                .background(Color(0xFFE0F7FA))
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Kode",
+                text = "Kodes",
                 modifier = Modifier.weight(1f),
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center
@@ -80,40 +81,66 @@ fun DataPage(navController: NavController, productViewModel: ProductViewModel) {
                 ProductRow(
                     product = product,
                     onEditClick = {
-                        // Arahkan ke halaman edit produk
                         navController.navigate("EditProductScreen/${product.id_produk}")
+
                     },
                     onDeleteClick = {
-                        productViewModel.deleteProduct(product.id_produk)
+                        productToDelete = product
+                        showDeleteConfirmationDialog = true
                     }
                 )
             }
+            item {
+                Button(
+                    onClick = { navController.navigate("AddProductScreen") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF26C6DA))
+                ) {
+                    Text(text = "Tambah Produk", color = Color.White)
+                }
+            }
         }
-
         // Tombol "Tambah Produk"
-        Button(
-            onClick = { navController.navigate("AddProductScreen") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF26C6DA))
-        ) {
-            Text(text = "Tambah Produk", color = Color.White)
-        }
+//        Button(
+//            onClick = { navController.navigate("AddProductScreen") },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(top = 16.dp),
+//            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF26C6DA))
+//        ) {
+//            Text(text = "Tambah Produk", color = Color.White)
+//        }
+    }
 
-        // Tombol "Tambah Dummy Data"
-        Button(
-            onClick = { /*productViewModel.addDummyData()*/ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF26C6DA))
-        ) {
-            Text(text = "Tambah Dummy Data", color = Color.White)
-        }
+    // Konfirmasi dialog untuk menghapus produk
+    if (showDeleteConfirmationDialog && productToDelete != null) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirmationDialog = false },
+            title = { Text(text = "Hapus Produk") },
+            text = {
+                Text(text = "Apakah Anda yakin ingin menghapus produk \"${productToDelete?.nama_produk}\"?")
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    productViewModel.deleteProduct(productToDelete!!.id_produk)
+                    Log.d("ProductViewModel", "Product deleted: ${productToDelete!!.id_produk}")
+                    showDeleteConfirmationDialog = false
+                }) {
+                    Text(text = "Hapus", color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showDeleteConfirmationDialog = false
+                }) {
+                    Text(text = "Batal")
+                }
+            }
+        )
     }
 }
-
 @Composable
 fun ProductRow(
     product: Product,
@@ -158,11 +185,4 @@ fun ProductRow(
             Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete", tint = Color.Red)
         }
     }
-}
-@Composable
-@Preview(showBackground = true)
-fun DataPagePreview() {
-    val navController = rememberNavController()
-    val productViewModel = ProductViewModel()
-    DataPage(navController = navController, productViewModel = productViewModel)
 }

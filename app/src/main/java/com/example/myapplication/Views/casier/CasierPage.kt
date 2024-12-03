@@ -45,12 +45,13 @@ fun ScannerScreen(barcodeScanner: BarcodeScanner, navController: NavController) 
             colors = ButtonDefaults.buttonColors(Color(0xFFFDDE55)),
             modifier = Modifier
                 .size(100.dp) // Ukuran tombol
-                .padding(16.dp) // Padding
+                .padding(16.dp) // Padding untuk tombol
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.camera),
+                painter = painterResource(id = R.drawable.casier),
                 contentDescription = "Camera Icon",
-                modifier = Modifier.size(80.dp), // Ukuran ikon
+                modifier = Modifier
+                    .size(88.dp), // Ukuran ikon hampir sebesar tombol (100.dp - sedikit margin)
                 tint = Color.Black
             )
         }

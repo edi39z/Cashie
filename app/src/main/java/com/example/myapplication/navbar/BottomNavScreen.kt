@@ -26,7 +26,7 @@ sealed class BottomBarScreen(
         icon_focused = R.drawable.database_focused
     )
     object Cashier: BottomBarScreen(
-        route = "cashier",
+        route = "kasir",
         title = "Cashier",
         icon = R.drawable.casier,
         icon_focused = R.drawable.casier_focused

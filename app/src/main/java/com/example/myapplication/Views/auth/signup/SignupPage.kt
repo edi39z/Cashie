@@ -53,7 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Background
-import com.example.myapplication.ui.theme.textLogo
+import com.example.myapplication.ui.theme.button
 
 
 @Composable
@@ -79,22 +79,7 @@ fun SignupPage(
         Image(
             painter = painterResource(id = R.drawable.cashie),
             contentDescription = null,
-            modifier = Modifier.size(100.dp)
-        )
-
-        Text(
-            text = stringResource(R.string.app_name),
-            fontSize = 28.sp,
-            fontFamily = FontFamily.Cursive,
-            fontWeight = FontWeight.Black,
-            color = textLogo,
-            style = TextStyle(
-                shadow = Shadow(
-                    color = textLogo,
-                    offset = Offset(2f, 2f),
-
-                    )
-            )
+            modifier = Modifier.size(160.dp)
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -135,7 +120,7 @@ fun SignupPage(
                         Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(50)
+                    shape = RoundedCornerShape(16.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -159,7 +144,8 @@ fun SignupPage(
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),                    shape = RoundedCornerShape(50)
+                    shape = RoundedCornerShape(16.dp),
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -182,17 +168,18 @@ fun SignupPage(
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),                    shape = RoundedCornerShape(50)
+                    shape = RoundedCornerShape(16.dp),
+                    visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(36.dp))
                 val scope = rememberCoroutineScope()
                 // Tombol sigup
                 Button(
                     onClick = {
                         viewModel.signUpWithEmailAndPassword(
                             onLoginSuccess = {
-                                // Navigasi hanya dilakukan jika pembuatan akun berhasil
+
                                 navController.navigate("register")
                             }
                         )
@@ -200,66 +187,16 @@ fun SignupPage(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A5D44)),
-                    shape = RoundedCornerShape(50)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF03AED2)),
+                    shape = RoundedCornerShape(16.dp)
                 ) {
                     Text(text = "Create Account", color = Color.White)
                 }
 
 
 
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(50.dp))
 
-                // Login with Third Party
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    HorizontalDivider(modifier = Modifier.weight(1f))
-                    Text(
-                        text = " or Continue with ",
-                        fontSize = 12.sp,
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        color = Color.Gray
-                    )
-                    HorizontalDivider(modifier = Modifier.weight(1f))
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                    OutlinedButton(
-                        onClick = {
-                            viewModel.signInWithGoogle {
-                                navController.navigate("register") //nanti buat ke register
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)
-
-                    ) {
-                        // Display the Google logo
-                        Image(
-                            painter = painterResource(id = R.drawable.google),
-                            contentDescription = null,
-                            modifier = Modifier.size(36.dp).padding(end = 8.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "Continue With Google",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.Gray
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(30.dp))
                 // Already have an account? Login
                 Row(verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 0.dp))
@@ -269,7 +206,7 @@ fun SignupPage(
                         onClick = { navController.navigate("login") },
                         contentPadding = PaddingValues(0.dp)
                     ) {
-                        Text(text = "Login", fontSize = 13.sp ,color = Color(0xFF1A5D44), fontWeight = FontWeight.Bold)
+                        Text(text = "Login", fontSize = 13.sp ,color =(button), fontWeight = FontWeight.Bold)
                     }
                 }
             }
