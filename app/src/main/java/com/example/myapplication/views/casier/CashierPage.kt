@@ -6,18 +6,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+//import androidx.compose.foundation.layout.FlowRowScopeInstance.weight
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Face
@@ -343,7 +347,7 @@ fun CashierPage() {
                         "Preview",
                         fontWeight = FontWeight(700)
                     )
-                    Box(
+                    Column(
                         modifier = Modifier
                             .background(
                                 color = Blue,
@@ -353,7 +357,9 @@ fun CashierPage() {
                             .fillMaxSize()
                     ) {
                         Column(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .weight(5f)
                         ) {
                             // Add your table here
                             Row(
@@ -377,55 +383,44 @@ fun CashierPage() {
                                 )
                             }
                             Spacer(Modifier.size(8.dp))
-                            previewList.forEach { map ->
-                                Log.d("kasieerrrrr", map.toString())
-                                totalHarga += map.harga
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    // Safe access and proper casting
-                                    Text(
-                                        text = map.nama, // Default to "Unknown" if null
-                                        fontSize = 9.sp,
-                                    )
-                                    Text(
-                                        text = map.jumlah.toString(), // Convert Int to String
-                                        fontSize = 9.sp
-                                    )
-                                    Text(
-                                        text = map.harga.toString(), // Convert Int to String
-                                        fontSize = 9.sp
-                                    )
+
+                            Column (
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .verticalScroll(rememberScrollState())
+                            ){
+                                previewList.forEach { map ->
+                                    Log.d("kasieerrrrr", map.toString())
+                                    totalHarga += map.harga
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        // Safe access and proper casting
+                                        Text(
+                                            text = map.nama, // Default to "Unknown" if null
+                                            fontSize = 9.sp,
+                                        )
+                                        Text(
+                                            text = map.jumlah.toString(), // Convert Int to String
+                                            fontSize = 9.sp
+                                        )
+                                        Text(
+                                            text = map.harga.toString(), // Convert Int to String
+                                            fontSize = 9.sp
+                                        )
+                                    }
                                 }
                             }
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                            Text("tes")
-                        }
 
+
+                        }
 
                         Column (
                             horizontalAlignment = Alignment.End,
                             modifier = Modifier
-                                .align(Alignment.BottomEnd)
+                                .fillMaxWidth()
+                                .weight(1f)
                         ){
                             Text(
                                 text = "Total:  $totalHarga",
@@ -433,7 +428,7 @@ fun CashierPage() {
                                 fontWeight = FontWeight(700)
                             )
 
-                            Spacer(Modifier.size(20.dp))
+                            Spacer(Modifier.size(10.dp))
 
                             val coroutineScope = rememberCoroutineScope()
 
