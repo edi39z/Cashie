@@ -41,6 +41,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.navbar.BottomBarScreen
+import com.example.myapplication.product.ProductViewModel
 import com.example.myapplication.ui.theme.Blue
 import com.example.myapplication.views.auth.`fun`.AuthManager
 import com.example.myapplication.views.profile.ProfileViewModel
@@ -50,7 +51,7 @@ import com.google.firebase.ktx.Firebase
 
 
 @Composable
-fun HomePage(navMainController: NavController, profileViewModel: ProfileViewModel,navController: NavController) {
+fun HomePage(navMainController: NavController, profileViewModel: ProfileViewModel,navController: NavController, productViewModel: ProductViewModel) {
     // Mendapatkan data pengguna dari StateFlow
     val userState = profileViewModel.user.collectAsState(initial = null)
     val user = userState.value
