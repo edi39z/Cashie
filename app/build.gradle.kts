@@ -147,5 +147,10 @@ dependencies {
         implementation(libs.firebase.auth.ktx)
         implementation(libs.play.services.auth)
 
+    implementation (libs.androidx.compose.material3.material3)
+    implementation (libs.androidx.compose.ui.ui2)
+    implementation (libs.androidx.compose.material.material2)
+
+
 
 }

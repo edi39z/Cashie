@@ -54,7 +54,7 @@ fun BottomNavGraph(navHostController: NavController, appContext: Context) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 composable(route = BottomBarScreen.Home.route) {
-                    HomePage(navMainController = navHostController, profileViewModel = profileViewModel)
+                    HomePage(navMainController = navHostController, profileViewModel = profileViewModel,navController = navController)
                 }
                 composable(route = BottomBarScreen.Databases.route) {
                     DataPage(navController = navController, productViewModel = productViewModel)
