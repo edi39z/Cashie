@@ -74,7 +74,7 @@ fun BottomBar(navController: NavHostController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp) // Tinggi navbar tanpa floating
+                .height(74.dp) // Tinggi navbar tanpa floating
                 .shadow(6.dp, shape = RoundedCornerShape(2.dp)) // Shadow lebih nampak
                 .background(colorResource(id = R.color.navbar)),
             horizontalArrangement = Arrangement.SpaceAround,
@@ -122,7 +122,7 @@ fun BottomBar(navController: NavHostController) {
                         BottomBarScreen.Cashier.icon
                 ),
                 contentDescription = BottomBarScreen.Cashier.title,
-                modifier = Modifier.size(35.dp) // Ukuran ikon di dalam lingkaran
+                modifier = Modifier.size(52.dp) // Ukuran ikon di dalam lingkaran
             )
         }
 

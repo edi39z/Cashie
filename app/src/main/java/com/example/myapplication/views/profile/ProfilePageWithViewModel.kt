@@ -16,7 +16,7 @@ fun ProfilePageWithViewModel(viewModel: ProfileViewModel = viewModel(), navContr
 
     val user = userState.value
     if (user != null) {
-        ProfilePage(user = user, navController = navController)
+        ProfilePage(user = user, navController = navController, profileViewModel = viewModel, navMainController = navController)
     } else {
         // Loading Indicator
         Box(

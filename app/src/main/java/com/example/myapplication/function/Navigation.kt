@@ -1,4 +1,4 @@
-package com.example.myapplication.`fun`
+package com.example.myapplication.function
 
 import android.content.Context
 import androidx.compose.runtime.Composable
@@ -20,7 +20,7 @@ import com.example.myapplication.views.auth.signup.SignupPage
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 
 
@@ -29,6 +29,8 @@ fun Navigation( modifier : Modifier = Modifier, authManager: AuthManager,appCont
     val navController = rememberNavController()
     var startDestination by remember{ mutableStateOf("login") }
     val scope = rememberCoroutineScope()
+    var isLoading by remember{ mutableStateOf(true) }
+
 
     LaunchedEffect(Unit) {
             if (Firebase.auth.currentUser != null) {
@@ -44,27 +46,31 @@ fun Navigation( modifier : Modifier = Modifier, authManager: AuthManager,appCont
             } else {
                 startDestination = "login"
             }
+        delay(500)
+        isLoading = false
     }
 
-    NavHost(
-        navController = navController,
-        startDestination = startDestination
-    ) {
-        composable("login"){
-            LoginPage(modifier, navController)
-        }
-        composable("signup"){
-            SignupPage(modifier, navController)
-        }
-        composable("register"){
-            RegisterScreen(modifier, navController)
-        }
+    Loader(isLoading) {
+        NavHost(
+            navController = navController,
+            startDestination = startDestination
+        ) {
+            composable("login"){
+                LoginPage(modifier, navController)
+            }
+            composable("signup"){
+                SignupPage(modifier, navController)
+            }
+            composable("register"){
+                RegisterScreen(modifier, navController)
+            }
 
-        composable("home"){
-            BottomNavGraph(
-                navHostController = navController,
-                appContext = appContext
-            )
+            composable("home"){
+                BottomNavGraph(
+                    navHostController = navController,
+                    appContext = appContext
+                )
+            }
         }
     }
 }
