@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.views.Kasir
 import com.example.myapplication.product.ProductViewModel
+import com.example.myapplication.views.casier.CashierPage
 import com.example.myapplication.views.database.AddProductPage
 import com.example.myapplication.views.database.DataPage
 import com.example.myapplication.views.database.EditProductPage
@@ -84,7 +85,8 @@ fun BottomNavGraph(navHostController: NavController, appContext: Context) {
 
 
                 composable(route = BottomBarScreen.Cashier.route) {
-                Kasir()
+//                Kasir()
+                    CashierPage()
                 }
                 composable(route = BottomBarScreen.History.route) {
                     HistoryPage()

@@ -59,13 +59,12 @@ data class PreviewProduk(
     var harga: Double
 )
 
-
 @SuppressLint("LogNotTimber")
 @Composable
 fun Kasir(){
 
-    val items by remember { mutableStateOf(mutableMapOf<String, Product>()) }
     val db = Firebase.firestore
+    val items by remember { mutableStateOf(mutableMapOf<String, Product>()) }
     val itemsCollection = db.collection("users").document("KxrhNm3yfzb4GUoEGjb2v1IJcue2").collection("products")
 
     // Menggunakan LaunchedEffect untuk memuat data
