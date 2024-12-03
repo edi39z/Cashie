@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -130,11 +131,17 @@ fun CashierPage() {
                                         harga = it.harga_produk.toDouble()
                                     )
                                 )
+                                isCheck = false
                             } else {
                                 // Cari index elemen di previewList dan update jumlahnya
                                 val index = previewList.indexOf(checkPreviewList)
                                 if (index >= 0) {
-                                    previewList[index] = checkPreviewList.copy(jumlah = checkPreviewList.jumlah + 1)
+                                    val updatedItem = checkPreviewList.copy(
+                                        jumlah = checkPreviewList.jumlah + 1,
+                                        harga = checkPreviewList.harga * (checkPreviewList.jumlah + 1)
+                                    )
+                                    previewList[index] = updatedItem
+                                    isCheck = false
                                 }
                             }
                         }
@@ -195,7 +202,17 @@ fun CashierPage() {
                     modifier = Modifier.weight(1f)
                 ) {
                     Button(
-                        onClick = {},
+                        onClick = {
+                            if (isCheck == false){
+                                val lastIndex = previewList.lastIndex
+                                if (lastIndex >= 0) {
+                                    val lastItem = previewList[lastIndex]
+                                    previewList[lastIndex] = lastItem.copy(jumlah = lastItem.jumlah + 1)
+                                    Log.d("Kasir2", previewList.toString())
+                                    isCheck = true
+                                }
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(Gray),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
@@ -209,7 +226,17 @@ fun CashierPage() {
                         )
                     }
                     Button(
-                        onClick = {},
+                        onClick = {
+                            if (isCheck == false){
+                                val lastIndex = previewList.lastIndex
+                                if (lastIndex >= 0) {
+                                    val lastItem = previewList[lastIndex]
+                                    previewList[lastIndex] = lastItem.copy(jumlah = lastItem.jumlah + 2)
+                                    Log.d("Kasir2", previewList.toString())
+                                    isCheck = true
+                                }
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(Gray),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
@@ -223,7 +250,17 @@ fun CashierPage() {
                         )
                     }
                     Button(
-                        onClick = {},
+                        onClick = {
+                            if (isCheck == false){
+                                val lastIndex = previewList.lastIndex
+                                if (lastIndex >= 0) {
+                                    val lastItem = previewList[lastIndex]
+                                    previewList[lastIndex] = lastItem.copy(jumlah = lastItem.jumlah + 3)
+                                    Log.d("Kasir2", previewList.toString())
+                                    isCheck = true
+                                }
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(Gray),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
@@ -246,7 +283,17 @@ fun CashierPage() {
                     modifier = Modifier.weight(1f)
                 ) {
                     Button(
-                        onClick = {},
+                        onClick = {
+                            if (isCheck == false){
+                                val lastIndex = previewList.lastIndex
+                                if (lastIndex >= 0) {
+                                    val lastItem = previewList[lastIndex]
+                                    previewList[lastIndex] = lastItem.copy(jumlah = lastItem.jumlah + 4)
+                                    Log.d("Kasir2", previewList.toString())
+                                    isCheck = true
+                                }
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(Gray),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
@@ -260,7 +307,17 @@ fun CashierPage() {
                         )
                     }
                     Button(
-                        onClick = {},
+                        onClick = {
+                            if (isCheck == false){
+                                val lastIndex = previewList.lastIndex
+                                if (lastIndex >= 0) {
+                                    val lastItem = previewList[lastIndex]
+                                    previewList[lastIndex] = lastItem.copy(jumlah = lastItem.jumlah + 9)
+                                    Log.d("Kasir2", previewList.toString())
+                                    isCheck = true
+                                }
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(Gray),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
@@ -274,7 +331,18 @@ fun CashierPage() {
                         )
                     }
                     Button(
-                        onClick = {},
+                        onClick = {
+                            var n = 49
+                            if (isCheck == false){
+                                val lastIndex = previewList.lastIndex
+                                if (lastIndex >= 0) {
+                                    val lastItem = previewList[lastIndex]
+                                    previewList[lastIndex] = lastItem.copy(jumlah = lastItem.jumlah + n)
+                                    Log.d("Kasir2", previewList.toString())
+                                    isCheck = true
+                                }
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(Gray),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
@@ -429,8 +497,10 @@ fun CashierPage() {
                                 )
                             }
                             Spacer(Modifier.size(8.dp))
+                            var totalHarga = 0.0
                             previewList.forEach { map ->
                                 Log.d("kasieerrrrr", map.toString())
+                                totalHarga += map.harga
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween
@@ -450,6 +520,12 @@ fun CashierPage() {
                                     )
                                 }
                             }
+                            Text(
+                                text = "Total Harga: $totalHarga",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight(700),
+                                textAlign = TextAlign.End
+                            )
                         }
 
                         val coroutineScope = rememberCoroutineScope()
