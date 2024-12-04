@@ -144,46 +144,55 @@ fun HomePage(
                     Color(0xFF68D2E8)  // Warna akhir
                 )
             )
+//
+//            Row(
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                modifier = Modifier
+//                    .background(
+//                        brush = gradientBrush,
+//                        shape = RoundedCornerShape(16.dp)
+//                    )
+//                    .padding(28.dp, 20.dp)
+//                    .fillMaxWidth()
+//                    .clip(RoundedCornerShape(16.dp))
+//                    .clickable {
+//                        navMainController.navigate(BottomBarScreen.Cashier.route)
+//                    },
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Column(
+//                    modifier = Modifier
+//                        .weight(0.7f) // Memberikan ruang proporsional untuk kolom
+//                ) {
+//                    Text(
+//                        text = "Cashier",
+//                        fontSize = 18.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        color = Color.Black
+//                    )
+//                    Text(
+//                        text = "Let's Get Started! Begin a New Transaction",
+//                        fontSize = 11.sp,
+//                    )
+//                }
+//                Image(
+//                    painter = painterResource(R.drawable.group),
+//                    contentDescription = "Icon",
+//                    modifier = Modifier
+//                        .size(90.dp)
+//                        .weight(0.3f), // Memberikan ruang proporsional untuk gambar
+//                    contentScale = ContentScale.Fit // Hindari pemotongan gambar
+//                )
+//            }
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .background(
-                        brush = gradientBrush,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                    .padding(28.dp, 20.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .clickable {},
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(0.7f) // Memberikan ruang proporsional untuk kolom
-                ) {
-                    Text(
-                        text = "Cashier",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-                    Text(
-                        text = "Let's Get Started! Begin a New Transaction",
-                        fontSize = 11.sp,
-                    )
-                }
-                Image(
-                    painter = painterResource(R.drawable.group),
-                    contentDescription = "Icon",
-                    modifier = Modifier
-                        .size(90.dp)
-                        .weight(0.3f), // Memberikan ruang proporsional untuk gambar
-                    contentScale = ContentScale.Fit // Hindari pemotongan gambar
-                )
-            }
 
-
+            CustomBox(
+                title = "Cashier",
+                subtitle = "Let's Get Started! Begin a New Transaction",
+                imageRes = R.drawable.group,
+                onClick = {
+                    navController.navigate(BottomBarScreen.Cashier.route)}
+            )
 
             Spacer(modifier = Modifier.height(49.dp))
 

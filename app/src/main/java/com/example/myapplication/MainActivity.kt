@@ -16,7 +16,7 @@
     class MainActivity : ComponentActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            enableEdgeToEdge()
+//            enableEdgeToEdge()
             val authManager = AuthManager(this)
             setContent {
                 MyApplicationTheme {
