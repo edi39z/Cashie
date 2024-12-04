@@ -83,8 +83,8 @@ fun CashierPage(barcodeScanner: BarcodeScanner, navController: NavController) {
         .document(Firebase.auth.currentUser!!.uid)
         .collection("products")
     var totalPrice = 0.0
-//    val lastScannedProduct = previewMap.entries.lastOrNull()?.value?.name ?: "Tidak ada produk"
     val lastScannedProduct = previewMap.entries.lastOrNull()?.value
+
 
     // Menggunakan LaunchedEffect untuk memuat data
     LaunchedEffect(Unit) {
@@ -262,6 +262,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner, navController: NavController) {
                     modifier = Modifier
                         .size(35.dp) // Ukuran lingkaran
                         .clip(CircleShape) // Membuat bentuk lingkaran
+                        .let {
+                            if (!isCheck && previewMap.isNotEmpty()) {
+                                it.border(2.dp, Yellow, CircleShape)
+                            } else {
+                                it // return the original modifier if condition not met
+                            }
+                        }
                 ) {
                     Text(
                         "x2",
@@ -295,6 +302,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner, navController: NavController) {
                     modifier = Modifier
                         .size(35.dp) // Ukuran lingkaran
                         .clip(CircleShape) // Membuat bentuk lingkaran
+                        .let {
+                            if (!isCheck && previewMap.isNotEmpty()) {
+                                it.border(2.dp, Yellow, CircleShape)
+                            } else {
+                                it // return the original modifier if condition not met
+                            }
+                        }
                 ) {
                     Text(
                         "x3",
@@ -328,6 +342,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner, navController: NavController) {
                     modifier = Modifier
                         .size(35.dp) // Ukuran lingkaran
                         .clip(CircleShape) // Membuat bentuk lingkaran
+                        .let {
+                            if (!isCheck && previewMap.isNotEmpty()) {
+                                it.border(2.dp, Yellow, CircleShape)
+                            } else {
+                                it // return the original modifier if condition not met
+                            }
+                        }
                 ) {
                     Text(
                         "x4",
@@ -364,6 +385,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner, navController: NavController) {
                     modifier = Modifier
                         .size(35.dp) // Ukuran lingkaran
                         .clip(CircleShape) // Membuat bentuk lingkaran
+                        .let {
+                            if (!isCheck && previewMap.isNotEmpty()) {
+                                it.border(2.dp, Yellow, CircleShape)
+                            } else {
+                                it // return the original modifier if condition not met
+                            }
+                        }
                 ) {
                     Text(
                         "x5",
@@ -397,6 +425,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner, navController: NavController) {
                     modifier = Modifier
                         .size(35.dp) // Ukuran lingkaran
                         .clip(CircleShape) // Membuat bentuk lingkaran
+                        .let {
+                            if (!isCheck && previewMap.isNotEmpty()) {
+                                it.border(2.dp, Yellow, CircleShape)
+                            } else {
+                                it // return the original modifier if condition not met
+                            }
+                        }
                 ) {
                     Text(
                         "x10",
@@ -430,6 +465,13 @@ fun CashierPage(barcodeScanner: BarcodeScanner, navController: NavController) {
                     modifier = Modifier
                         .size(35.dp) // Ukuran lingkaran
                         .clip(CircleShape) // Membuat bentuk lingkaran
+                        .let {
+                            if (!isCheck && previewMap.isNotEmpty()) {
+                                it.border(2.dp, Yellow, CircleShape)
+                            } else {
+                                it // return the original modifier if condition not met
+                            }
+                        }
                 ) {
                     Text(
                         "x50",
